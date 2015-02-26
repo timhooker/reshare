@@ -15,19 +15,71 @@ app.controller('MainNavCtrl',
     };
   }]);
 
+app.factory('Share', function() {
+
+  return function(spec) {
+    spec = spec || {};
+
+    var self = {
+      url: spec.url,
+      description: spec.description || '',
+      tags: [''],
+
+      addTag: function(tag) {
+        self.tags.push(tag || '');
+      },
+
+      removeTag: function(tag) {
+        var index = self.tags.indexOf(tag);
+
+        if (index >= 0) {
+          self.tags.splice(index, 1);
+        }
+      }
+    };
+
+    return self;
+  };
+});
+
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
     templateUrl: 'shares/shares.html',
     controller: 'SharesCtrl',
-    controllerAs: 'vm'
+    controllerAs: 'vm',
+    resolve: {
+      shares: ['sharesService', function (sharesService) {
+        return sharesService.list();
+      }]
+    }
   };
 
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', [function () {
-  // TODO: load these via AJAX
-  this.shares = [];
+.controller('SharesCtrl', ['sharesService', 'shares', 'Share', function (sharesService, shares, Share) {
+  var self = this;
+
+  self.shares = shares;
+
+  self.newShare = Share();
+
+  self.addShare = function () {
+    var share = Share(self.newShare);
+
+    console.log(share);
+    console.log(self.shares);
+    sharesService.addShare(share).then(function () {
+
+      self.shares = self.shares.filter(function (existingShare) {
+        return existingShare.shareId !== share.shareId;
+      });
+
+      self.shares.push(share);
+    });
+
+    self.newShare = Share();
+  };
 }]);
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -109,6 +161,40 @@ app.factory('StringUtil', function() {
     }
   };
 });
+
+app.factory('sharesService', ['$http', '$log', function($http, $log) {
+
+  function get(url) {
+    return processAjaxPromise($http.get(url));
+  }
+
+  function processAjaxPromise(p) {
+    return p.then(function (result) {
+      return result.data;
+    })
+    .catch(function (error) {
+      $log.log(error);
+    });
+  }
+
+  return {
+    list: function () {
+      return get('/api/res');
+    },
+
+    getByShareId: function (shareId) {
+      if (!shareId) {
+        throw new Error('getByShareId requires a share id');
+      }
+
+      return get('/api/res/' + shareId);
+    },
+
+    addShare: function (share) {
+      return processAjaxPromise($http.post('/api/res', share));
+    }
+  };
+}]);
 
 app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
   // My $http promise then and catch always

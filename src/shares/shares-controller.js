@@ -13,17 +13,20 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', ['sharesService', 'shares', function (sharesService, shares) {
+.controller('SharesCtrl', ['sharesService', 'shares', 'Share', function (sharesService, shares, Share) {
   var self = this;
 
-  self.shares = [];
+  self.shares = shares;
 
   self.newShare = Share();
 
   self.addShare = function () {
     var share = Share(self.newShare);
 
+    console.log(share);
+    console.log(self.shares);
     sharesService.addShare(share).then(function () {
+
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare.shareId !== share.shareId;
       });

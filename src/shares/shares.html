@@ -1,7 +1,26 @@
 <h1>Shares</h1>
 
+<h2>Add Share</h2>
+<!-- // ADD a share vm.addShare(); -->
+<form ng-submit="vm.addShare()">
+  <label>url
+    <input ng-model="vm.newShare.url">
+  </label>
+  <label>description
+    <input ng-model="vm.newShare.description">
+  </label>
+  <ul>
+    <li ng-repeat="tag in vm.newShare.tags">
+      <input type="text" ng-model="tag">
+      <button ng-click="vm.newShare.deleteTag(tag)">X</button>
+    </li>
+  </ul>
+</form>
+<button ng-click="vm.newShare.addTag()">+ ADD</button>
+
+<!-- // Show a share vm.shares -->
 <ul>
-  <li ng-repeat="share in shares">
-    TODO...
+  <li ng-repeat="share in vm.shares">
+    <p>url: {{share.url}} desc: {{share.description}}</p>
   </li>
 </ul>
