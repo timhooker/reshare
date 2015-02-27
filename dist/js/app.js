@@ -23,18 +23,21 @@ app.factory('Share', function() {
     var self = {
       url: spec.url,
       description: spec.description || '',
-      tags: [],
+      tags: spec.tags || [1, 2, 3],
 
-      addTag: function(tag) {
-        self.tags.push(tag || '');
+      addTag: function(tag, $event) {
+        self.tags.push(tag);
       },
 
-      removeTag: function(tag) {
-        var index = self.tags.indexOf(tag);
-
-        if (index >= 0) {
+      removeTag: function($event, index) {
+        $event.cancelBubble = true;
           self.tags.splice(index, 1);
-        }
+
+        // var index = self.tags.indexOf(tag);
+        // console.log(index);
+        // if (index >= 0) {
+        //   self.tags.splice(index, 1);
+        // }
       }
     };
 
@@ -61,7 +64,6 @@ app.config(['$routeProvider', function($routeProvider) {
   var self = this;
 
   self.shares = shares;
-  $log.log(self.shares);
 
   self.newShare = Share();
 

@@ -17,7 +17,6 @@ app.config(['$routeProvider', function($routeProvider) {
   var self = this;
 
   self.shares = shares;
-  $log.log(self.shares);
 
   self.newShare = Share();
 
