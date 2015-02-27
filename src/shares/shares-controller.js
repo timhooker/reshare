@@ -21,7 +21,7 @@ app.config(['$routeProvider', function($routeProvider) {
   self.newShare = Share();
 
   self.addShare = function () {
-    var share = Share(self.newShare);
+    var share = self.newShare;
 
     sharesService.addShare(share).then(function () {
 

@@ -25,19 +25,19 @@ app.factory('Share', function() {
       description: spec.description || '',
       tags: spec.tags || [1, 2, 3],
 
-      addTag: function(tag, $event) {
+      addTag: function($event, tag) {
+        $event.preventDefault();
+        if (!tag) {
+          tag = '';
+        }
+        console.log(tag);
         self.tags.push(tag);
+        console.log(self.tags);
       },
 
       removeTag: function($event, index) {
-        $event.cancelBubble = true;
-          self.tags.splice(index, 1);
-
-        // var index = self.tags.indexOf(tag);
-        // console.log(index);
-        // if (index >= 0) {
-        //   self.tags.splice(index, 1);
-        // }
+        $event.preventDefault();
+        self.tags.splice(index, 1);
       }
     };
 
@@ -68,7 +68,7 @@ app.config(['$routeProvider', function($routeProvider) {
   self.newShare = Share();
 
   self.addShare = function () {
-    var share = Share(self.newShare);
+    var share = self.newShare;
 
     sharesService.addShare(share).then(function () {
 
@@ -82,6 +82,16 @@ app.config(['$routeProvider', function($routeProvider) {
     self.newShare = Share();
   };
 }]);
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
 
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
@@ -152,16 +162,6 @@ app.config(['$routeProvider', function($routeProvider) {
     self.newUser = User();
   };
 }]);
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
 
 app.factory('sharesService', ['$http', '$log', function($http, $log) {
 

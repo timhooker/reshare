@@ -10,8 +10,10 @@
     <input ng-model="vm.newShare.description">
   </label>
   <ul>
-    <li ng-repeat="item in vm.newShare.tags">index {{ $index }}
-      <input ng-model="item"><button ng-click="vm.newShare.removeTag($event, $index)">X</button>
+    <li ng-repeat="item in vm.newShare.tags track by $index">index {{ $index }}
+      <input ng-model="item">
+      <button ng-click="vm.newShare.removeTag($event, $index)">X</button>
+      <button ng-click="vm.newShare.addTag($event, item)">X</button>
     </li>
   </ul>
   <button>add</button>

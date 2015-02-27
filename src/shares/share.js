@@ -8,19 +8,19 @@ app.factory('Share', function() {
       description: spec.description || '',
       tags: spec.tags || [1, 2, 3],
 
-      addTag: function(tag, $event) {
+      addTag: function($event, tag) {
+        $event.preventDefault();
+        if (!tag) {
+          tag = '';
+        }
+        console.log(tag);
         self.tags.push(tag);
+        console.log(self.tags);
       },
 
       removeTag: function($event, index) {
-        $event.cancelBubble = true;
-          self.tags.splice(index, 1);
-
-        // var index = self.tags.indexOf(tag);
-        // console.log(index);
-        // if (index >= 0) {
-        //   self.tags.splice(index, 1);
-        // }
+        $event.preventDefault();
+        self.tags.splice(index, 1);
       }
     };
 
