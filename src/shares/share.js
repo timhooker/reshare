@@ -13,9 +13,7 @@ app.factory('Share', function() {
         if (!tag) {
           tag = '';
         }
-        console.log(tag);
         self.tags.push(tag);
-        console.log(self.tags);
       },
 
       removeTag: function($event, index) {
