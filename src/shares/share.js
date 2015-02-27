@@ -6,7 +6,7 @@ app.factory('Share', function() {
     var self = {
       url: spec.url,
       description: spec.description || '',
-      tags: [''],
+      tags: [],
 
       addTag: function(tag) {
         self.tags.push(tag || '');

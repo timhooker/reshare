@@ -9,13 +9,14 @@
   <label>description
     <input ng-model="vm.newShare.description">
   </label>
-  <ul>
-    <li ng-repeat="tag in vm.newShare.tags">
-      <input type="text" ng-model="tag">
-      <button ng-click="vm.newShare.deleteTag(tag)">X</button>
-    </li>
-  </ul>
+  <button>+ Done</button>
 </form>
+<ul>
+  <li ng-repeat="tag in vm.newShare.tags">
+    <input type="text" ng-model="tag">
+    <button ng-click="vm.newShare.deleteTag(tag)">X</button>
+  </li>
+</ul>
 <button ng-click="vm.newShare.addTag()">+ ADD</button>
 
 <!-- // Show a share vm.shares -->

@@ -23,7 +23,7 @@ app.factory('Share', function() {
     var self = {
       url: spec.url,
       description: spec.description || '',
-      tags: [''],
+      tags: [],
 
       addTag: function(tag) {
         self.tags.push(tag || '');
@@ -57,22 +57,21 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', ['sharesService', 'shares', 'Share', function (sharesService, shares, Share) {
+.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', function ($log, sharesService, shares, Share) {
   var self = this;
 
   self.shares = shares;
+  $log.log(self.shares);
 
   self.newShare = Share();
 
   self.addShare = function () {
     var share = Share(self.newShare);
 
-    console.log(share);
-    console.log(self.shares);
     sharesService.addShare(share).then(function () {
 
       self.shares = self.shares.filter(function (existingShare) {
-        return existingShare.shareId !== share.shareId;
+        return existingShare._id !== share._id;
       });
 
       self.shares.push(share);
