@@ -10,7 +10,6 @@ app.controller('MainNavCtrl',
       if (path === '/') {
         return $location.path() === '/';
       }
-
       return StringUtil.startsWith($location.path(), path);
     };
   }]);
@@ -23,20 +22,20 @@ app.factory('Share', function() {
     var self = {
       url: spec.url,
       description: spec.description || '',
-      tags: spec.tags || [1, 2, 3],
+      tags: spec.tags || [''],
 
-      addTag: function($event, tag) {
-        $event.preventDefault();
-        if (!tag) {
+      addTag: function(tag) {
+        if (tag === undefined || !tag) {
           tag = '';
         }
-        console.log(tag);
-        self.tags.push(tag);
-        console.log(self.tags);
+        var index = self.tags.indexOf(tag);
+        if (index >= 0) {
+          return self.tags.splice(index, 1);
+        }
+        self.tags.splice(0, 0, tag);
       },
 
-      removeTag: function($event, index) {
-        $event.preventDefault();
+      removeTag: function(index) {
         self.tags.splice(index, 1);
       }
     };
@@ -82,16 +81,6 @@ app.config(['$routeProvider', function($routeProvider) {
     self.newShare = Share();
   };
 }]);
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
 
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
@@ -163,6 +152,29 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
+app.factory('ajaxHelper', function() {
+  return {
+    call: function(p) {
+      return p.then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        $log.log(error);
+      });
+    }
+  };
+});
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
+
 app.factory('sharesService', ['$http', '$log', function($http, $log) {
 
   function get(url) {
@@ -197,7 +209,7 @@ app.factory('sharesService', ['$http', '$log', function($http, $log) {
   };
 }]);
 
-app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
+app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {
   // My $http promise then and catch always
   // does the same thing, so I'll put the
   // processing of it here. What you probably
@@ -219,7 +231,7 @@ app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
 
   return {
     list: function () {
-      return get('/api/users');
+      return ajaxHelper.call($http.get('/api/users'));
     },
 
     getByUserId: function (userId) {
@@ -227,11 +239,11 @@ app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
         throw new Error('getByUserId requires a user id');
       }
 
-      return get('/api/users/' + userId);
+      return ajaxHelper.call($http.get('/api/users/' + userId));
     },
 
     addUser: function (user) {
-      return processAjaxPromise($http.post('/api/users', user));
+      return ajaxHelper.call($http.post('/api/users', user));
     }
   };
 }]);

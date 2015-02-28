@@ -7,7 +7,6 @@ app.controller('MainNavCtrl',
       if (path === '/') {
         return $location.path() === '/';
       }
-
       return StringUtil.startsWith($location.path(), path);
     };
   }]);

@@ -6,18 +6,20 @@ app.factory('Share', function() {
     var self = {
       url: spec.url,
       description: spec.description || '',
-      tags: spec.tags || [1, 2, 3],
+      tags: spec.tags || [''],
 
-      addTag: function($event, tag) {
-        $event.preventDefault();
-        if (!tag) {
+      addTag: function(tag) {
+        if (tag === undefined || !tag) {
           tag = '';
         }
-        self.tags.push(tag);
+        var index = self.tags.indexOf(tag);
+        if (index >= 0) {
+          return self.tags.splice(index, 1);
+        }
+        self.tags.splice(0, 0, tag);
       },
 
-      removeTag: function($event, index) {
-        $event.preventDefault();
+      removeTag: function(index) {
         self.tags.splice(index, 1);
       }
     };

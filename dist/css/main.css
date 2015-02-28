@@ -122,5 +122,9 @@ button {
 .main-nav-link.active {
   background: #4d5196; }
 
+li.ng-scope {
+  border: 1px solid black;
+  padding: 1em; }
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }

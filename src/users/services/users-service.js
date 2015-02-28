@@ -1,4 +1,4 @@
-app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
+app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {
   // My $http promise then and catch always
   // does the same thing, so I'll put the
   // processing of it here. What you probably
@@ -20,7 +20,7 @@ app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
 
   return {
     list: function () {
-      return get('/api/users');
+      return ajaxHelper.call($http.get('/api/users'));
     },
 
     getByUserId: function (userId) {
@@ -28,11 +28,11 @@ app.factory('usersService', ['$http', '$q', '$log', function($http, $q, $log) {
         throw new Error('getByUserId requires a user id');
       }
 
-      return get('/api/users/' + userId);
+      return ajaxHelper.call($http.get('/api/users/' + userId));
     },
 
     addUser: function (user) {
-      return processAjaxPromise($http.post('/api/users', user));
+      return ajaxHelper.call($http.post('/api/users', user));
     }
   };
 }]);

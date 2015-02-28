@@ -5,23 +5,34 @@
 <form ng-submit="vm.addShare()">
   <label>url
     <input ng-model="vm.newShare.url">
-  </label>
+  </label><br>
   <label>description
     <input ng-model="vm.newShare.description">
   </label>
-  <ul>
-    <li ng-repeat="item in vm.newShare.tags track by $index">index {{ $index }}
-      <input ng-model="item">
-      <button ng-click="vm.newShare.removeTag($event, $index)">X</button>
-      <button ng-click="vm.newShare.addTag($event, item)">X</button>
-    </li>
-  </ul>
-  <button>add</button>
+  <button>add</button><br>
 </form>
+<input ng-model="vm.newShare.tags[0]">
+<button ng-click="vm.newShare.removeTag(1)">X</button>
+<button ng-click="vm.newShare.addTag()">+</button>
+  <ul>
+    <!-- <li ng-repeat="item in vm.newShare.tags track by $index">index {{ $index }} -->
+      <li ng-repeat="item in vm.newShare.tags track by $index"
+      ng-click="vm.newShare.addTag(item)">
+        {{ item }}
+      </li>
+      <!-- <input ng-model="vm.newShare.tags[$index]">
+      <button ng-click="vm.newShare.removeTag($event, $index)">X</button>
+      <button ng-click="vm.newShare.addTag($event)">+</button> -->
+    <!-- </li> -->
+  </ul>
 
 <!-- // Show a share vm.shares -->
+<h4>Shares</h4>
 <ul>
   <li ng-repeat="share in vm.shares" ng-click="vm.newShare = share">
     <p>url: {{share.url}} desc: {{share.description}}</p>
+    <ul>
+      <li ng-repeat="item in share.tags track by $index">{{ item }}</li>
+    </ul>
   </li>
 </ul>
