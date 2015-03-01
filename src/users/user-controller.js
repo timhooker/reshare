@@ -13,6 +13,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
   $routeProvider.when('/users/:userid', routeDefinition);
 }])
-.controller('UserCtrl', ['user', 'currentUser', function (user, currentUser) {
+.controller('UserCtrl', ['user', function (user) {
   this.user = user;
 }]);

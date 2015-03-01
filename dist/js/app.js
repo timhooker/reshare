@@ -102,7 +102,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
   $routeProvider.when('/users/:userid', routeDefinition);
 }])
-.controller('UserCtrl', ['user', 'currentUser', function (user, currentUser) {
+.controller('UserCtrl', ['user', function (user) {
   this.user = user;
 }]);
 
@@ -191,14 +191,13 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
       if (!shareId) {
         throw new Error('getByShareId requires a share id');
       }
-      return ajaxHelper.call($http.get('/api/res/' + _id));
+      return ajaxHelper.call($http.get('/api/res/' + shareId));
     },
 
     addShare: function (share) {
       return ajaxHelper.call($http.post('/api/res', share));
     }
   };
-
 }]);
 
 app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {
@@ -221,8 +220,6 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
     },
 
     getCurrentUser: function() {
-      // TODO:
-      // add the call to get avatar image from github
       return ajaxHelper.call($http.get('/api/users/me'));
     }
   };
