@@ -9,18 +9,20 @@
   <label>description
     <input ng-model="vm.newShare.description">
   </label>
-  <button>add</button><br>
 </form>
 <form ng-submit="vm.newShare.addTag('')">
-  <input ng-model="vm.newShare.tags[0]">
+  <label>tags
+    <input ng-model="vm.newShare.tags[0]">
+  </label>
   <button type="submit">+</button>
 </form>
-<button ng-click="vm.newShare.removeTag(0, $event)">X</button>
-<ul>
-    <li ng-repeat="item in vm.newShare.tags track by $index" ng-click="vm.newShare.addTag(item)">
+<div>
+    <span ng-if="$index !== 0" ng-repeat="item in vm.newShare.tags track by $index" ng-click="vm.newShare.addTag(item)">
       {{ item }}
-    </li>
-</ul>
+      <button ng-click="vm.newShare.removeTag($index, $event)">X</button>
+    </span>
+</div>
+<button ng-click="vm.addShare()">add</button><br>
 
 <!-- // Show a share vm.shares -->
 <h4>Shares</h4>
