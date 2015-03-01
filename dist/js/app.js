@@ -2,7 +2,7 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', function($location, StringUtil) {
+  ['$location', 'StringUtil', 'usersService', function($location, StringUtil, usersService) {
     var self = this;
 
     self.isActive = function (path) {
@@ -12,6 +12,10 @@ app.controller('MainNavCtrl',
       }
       return StringUtil.startsWith($location.path(), path);
     };
+
+    usersService.getCurrentUser().then(function(data) {
+     self.currentUser = data;
+   });
   }]);
 
 app.factory('Share', function() {
@@ -152,7 +156,7 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
-app.factory('ajaxHelper', function() {
+app.factory('ajaxHelper', ['$log', function($log) {
   return {
     call: function(p) {
       return p.then(function (result) {
@@ -163,7 +167,7 @@ app.factory('ajaxHelper', function() {
       });
     }
   };
-});
+}]);
 
 // A little string utility... no biggie
 app.factory('StringUtil', function() {
@@ -210,25 +214,6 @@ app.factory('sharesService', ['$http', '$log', function($http, $log) {
 }]);
 
 app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {
-  // My $http promise then and catch always
-  // does the same thing, so I'll put the
-  // processing of it here. What you probably
-  // want to do instead is create a convenience object
-  // that makes $http calls for you in a standard
-  // way, handling post, put, delete, etc
-  function get(url) {
-    return processAjaxPromise($http.get(url));
-  }
-
-  function processAjaxPromise(p) {
-    return p.then(function (result) {
-      return result.data;
-    })
-    .catch(function (error) {
-      $log.log(error);
-    });
-  }
-
   return {
     list: function () {
       return ajaxHelper.call($http.get('/api/users'));
@@ -244,7 +229,11 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
 
     addUser: function (user) {
       return ajaxHelper.call($http.post('/api/users', user));
-    }
+    },
+
+    getCurrentUser: function() {
+     return ajaxHelper.call($http.get('/api/users/me'));
+   }
   };
 }]);
 
