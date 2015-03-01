@@ -27,10 +27,11 @@
 <!-- // Show a share vm.shares -->
 <h4>Shares</h4>
 <ul>
-  <li ng-repeat="share in vm.shares" ng-click="vm.newShare = share">
+  <li ng-repeat="share in vm.shares">
     <p>url: {{share.url}} desc: {{share.description}}</p>
-    <ul>
-      <li ng-repeat="item in share.tags track by $index">{{ item }}</li>
-    </ul>
+    <span ng-repeat="item in share.tags track by $index">{{ item }}  </span>
+    <button ng-click="share.vote(1)">&uarr;</button>{{share.upvotes}}
+    <button ng-click="share.vote(-1)">&darr;</button>{{share.downvotes}}
+    <button ng-click="share.vote(0)">clear</button>
   </li>
 </ul>

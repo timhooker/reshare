@@ -2,7 +2,7 @@
   <a class="main-nav-link" ng-class="{active: vm.isActive('/shares') || vm.isActive('/')}" href="#/shares">Shares</a>
   <a class="main-nav-link" ng-class="{active: vm.isActive('/users')}" ng-href="#/users">Users</a>
   <a class="main-nav-link" ng-if="!vm.currentUser" href="/auth/github">Login</a>
-  <!-- <a class="main-nav-link" ng-if="vm.currentUser" href="/logout">Logout</a>
-  <a class="main-nav-link" ng-if="vm.currentUser" href="/users/">{{vm.}}</a>
-  <img class="man-nav-link" ng-if="!vm.currentUser" src=""> -->
+  <a class="main-nav-link" ng-if="vm.currentUser" href="/logout">Logout</a>
+  <a class="main-nav-link" ng-if="vm.currentUser" ng-href="#/users/{{ vm.currentUser.userId }}">{{vm.currentUser.userId}}</a>
+  <img class="man-nav-link" ng-if="!vm.currentUser" src="">
 </nav>

@@ -29,13 +29,12 @@ app.config(['$routeProvider', function($routeProvider) {
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
-      
-      self.shares.push(share);
+
       sharesService.list().then(function(data){
         self.shares = data;
       });
 
     });
-
   };
+
 }]);
