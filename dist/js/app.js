@@ -29,6 +29,9 @@ app.factory('Share', ['$log', function($log) {
       url: spec.url,
       description: spec.description || '',
       tags: spec.tags || [''],
+      _id: spec._id || undefined,
+      upvotes: 0,
+      downvotes: 0,
 
       addTag: function(tag) {
         var index = self.tags.indexOf(tag);
@@ -42,9 +45,18 @@ app.factory('Share', ['$log', function($log) {
       },
 
       removeTag: function(index, $event) {
-        console.log($event);
         $event.preventDefault();
         self.tags.splice(index, 1);
+      },
+
+      vote: function(num) {
+        $log.log(num);
+        if (num === 1) {
+          ++self.upvotes;
+        } else if (num === -1) {
+          ++self.downvotes;
+        }
+        sharesService.vote(self._id, num);
       }
     };
 
@@ -83,15 +95,14 @@ app.config(['$routeProvider', function($routeProvider) {
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
-      
-      self.shares.push(share);
+
       sharesService.list().then(function(data){
         self.shares = data;
       });
 
     });
-
   };
+
 }]);
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -203,6 +214,11 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
 
     addShare: function (share) {
       return ajaxHelper.call($http.post('/api/res', share));
+    },
+
+    vote: function(id, num) {
+      var vote = { vote: num };
+      return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));
     }
   };
 }]);
