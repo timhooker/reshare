@@ -22,16 +22,20 @@ app.config(['$routeProvider', function($routeProvider) {
 
   self.addShare = function () {
     var share = self.newShare;
+    self.newShare = Share();
 
     sharesService.addShare(share).then(function () {
 
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
-
+      
       self.shares.push(share);
+      sharesService.list().then(function(data){
+        self.shares = data;
+      });
+
     });
 
-    self.newShare = Share();
   };
 }]);
