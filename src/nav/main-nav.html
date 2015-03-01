@@ -1,4 +1,5 @@
 <nav class="main-nav" ng-controller="MainNavCtrl as vm">
   <a class="main-nav-link" ng-class="{active: vm.isActive('/shares') || vm.isActive('/')}" href="#/shares">Shares</a>
   <a class="main-nav-link" ng-class="{active: vm.isActive('/users')}" ng-href="#/users">Users</a>
-  <a class="main-nav-link" ng-if="!vm.currentUser" href="/auth/github">Login</a></nav>
+  <a class="main-nav-link" ng-if="!vm.currentUser" href="/auth/github">Login</a>
+</nav>
