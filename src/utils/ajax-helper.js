@@ -1,4 +1,4 @@
-app.factory('ajaxHelper', function() {
+app.factory('ajaxHelper', ['$log', function($log) {
   return {
     call: function(p) {
       return p.then(function (result) {
@@ -9,4 +9,4 @@ app.factory('ajaxHelper', function() {
       });
     }
   };
-});
+}]);

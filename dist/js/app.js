@@ -2,7 +2,7 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', function($location, StringUtil) {
+  ['$location', 'StringUtil', 'usersService', '$log', function($location, StringUtil, usersService, $log) {
     var self = this;
 
     self.isActive = function (path) {
@@ -12,6 +12,11 @@ app.controller('MainNavCtrl',
       }
       return StringUtil.startsWith($location.path(), path);
     };
+
+    self.currentUser = undefined;
+    usersService.getCurrentUser().then(function(data) {
+      self.currentUser = data;
+    });
   }]);
 
 app.factory('Share', function() {
@@ -82,6 +87,29 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
+app.factory('ajaxHelper', ['$log', function($log) {
+  return {
+    call: function(p) {
+      return p.then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        $log.log(error);
+      });
+    }
+  };
+}]);
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
+
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
     templateUrl: 'users/user.html',
@@ -97,7 +125,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
   $routeProvider.when('/users/:userid', routeDefinition);
 }])
-.controller('UserCtrl', ['user', function (user) {
+.controller('UserCtrl', ['user', 'currentUser', function (user, currentUser) {
   this.user = user;
 }]);
 
@@ -152,82 +180,28 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
-app.factory('ajaxHelper', function() {
-  return {
-    call: function(p) {
-      return p.then(function (result) {
-        return result.data;
-      })
-      .catch(function (error) {
-        $log.log(error);
-      });
-    }
-  };
-});
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
-
-app.factory('sharesService', ['$http', '$log', function($http, $log) {
-
-  function get(url) {
-    return processAjaxPromise($http.get(url));
-  }
-
-  function processAjaxPromise(p) {
-    return p.then(function (result) {
-      return result.data;
-    })
-    .catch(function (error) {
-      $log.log(error);
-    });
-  }
+app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
 
   return {
     list: function () {
-      return get('/api/res');
+      return ajaxHelper.call($http.get('/api/res'));
     },
 
     getByShareId: function (shareId) {
       if (!shareId) {
         throw new Error('getByShareId requires a share id');
       }
-
-      return get('/api/res/' + shareId);
+      return ajaxHelper.call($http.get('/api/res/' + _id));
     },
 
     addShare: function (share) {
-      return processAjaxPromise($http.post('/api/res', share));
+      return ajaxHelper.call($http.post('/api/res', share));
     }
   };
+
 }]);
 
 app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {
-  // My $http promise then and catch always
-  // does the same thing, so I'll put the
-  // processing of it here. What you probably
-  // want to do instead is create a convenience object
-  // that makes $http calls for you in a standard
-  // way, handling post, put, delete, etc
-  function get(url) {
-    return processAjaxPromise($http.get(url));
-  }
-
-  function processAjaxPromise(p) {
-    return p.then(function (result) {
-      return result.data;
-    })
-    .catch(function (error) {
-      $log.log(error);
-    });
-  }
 
   return {
     list: function () {
@@ -244,6 +218,12 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
 
     addUser: function (user) {
       return ajaxHelper.call($http.post('/api/users', user));
+    },
+
+    getCurrentUser: function() {
+      // TODO:
+      // add the call to get avatar image from github
+      return ajaxHelper.call($http.get('/api/users/me'));
     }
   };
 }]);
