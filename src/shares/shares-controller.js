@@ -17,7 +17,6 @@ app.config(['$routeProvider', function($routeProvider) {
   var self = this;
 
   self.shares = shares;
-  console.log(self.shares);
 
   self.newShare = Share();
 
@@ -31,8 +30,7 @@ app.config(['$routeProvider', function($routeProvider) {
     var share = self.newShare;
     self.newShare = Share();
 
-    sharesService.addShare(share).then(function () {
-
+    sharesService.addShare(share).then(function (data) {
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
@@ -41,21 +39,12 @@ app.config(['$routeProvider', function($routeProvider) {
     });
   };
 
-  self.vote = function(share, num) {
-    if (num === 1) {
-      ++share.upvotes;
-      var value = 'upvotes';
-    } else if (num === -1) {
-      var value = 'downvotes';
-      ++share.downvotes;
-    }
-    sharesService.vote(share._id, num).then(function(data) {
-      share[value] = data;
+  self.vote = function(index, share, num) {
+    sharesService.vote(share._id, num).then(function() {
       sharesService.getByShareId(share._id).then(function(data){
-        self.addShare(data);
+        self.shares.splice(index, 1, data);
       });
     });
-    refreshShares();
   };
 
 }]);
