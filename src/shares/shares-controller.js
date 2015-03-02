@@ -41,7 +41,6 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 
   self.vote = function(index, share, num) {
-    sharesService.vote(share._id, num).then(function() {
       sharesService.getByShareId(share._id).then(function(data){
         self.shares.splice(index, 1, data);
       });
