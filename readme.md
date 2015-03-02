@@ -243,6 +243,8 @@ Vote on a resource:
 
     POST /api/res/:id/votes
 
+    post: /api/res/{{ vm.newShare._id }}/votes vote
+
 To upvote, post:
 
     { vote: 1 }

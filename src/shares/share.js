@@ -26,16 +26,6 @@ app.factory('Share', ['$log', function($log) {
       removeTag: function(index, $event) {
         $event.preventDefault();
         self.tags.splice(index, 1);
-      },
-
-      vote: function(num) {
-        $log.log(num);
-        if (num === 1) {
-          ++self.upvotes;
-        } else if (num === -1) {
-          ++self.downvotes;
-        }
-        sharesService.vote(self._id, num);
       }
     };
 
