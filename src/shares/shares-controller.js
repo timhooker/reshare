@@ -50,16 +50,25 @@ app.config(['$routeProvider', function($routeProvider) {
 
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
-      sharesService.getByShareId(share._id).then(function(data){
-        self.shares.splice(index, 1, data);
-      });
+      var comment = data;
+      share.comments.push(comment);
+      share.newComment = '';
     });
   };
 
   self.listComments = function (share) {
     sharesService.listComments(share._id).then(function(data) {
-      return data;
+      share.comments = data;
     });
+  };
+
+  self.toggleComments = function (share) {
+    if (!share.showComments) {
+      share.showComments = true;
+      self.listComments(share);
+    } else {
+      share.showComments = false;
+    }
   };
 
 }]);
