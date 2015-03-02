@@ -67,7 +67,7 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', function ($log, sharesService, shares, Share) {
+.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', 'currentUser', function ($log, sharesService, shares, Share, currentUser) {
   var self = this;
 
   self.shares = shares;
@@ -218,6 +218,13 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
       var vote = { vote: num };
       return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));
     }
+  };
+}]);
+
+app.factory('currentUser', ['usersService', function(usersService) {
+
+  return {
+    user: undefined
   };
 }]);
 
