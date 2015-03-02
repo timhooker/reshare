@@ -29,9 +29,10 @@
 <ul>
   <li ng-repeat="share in vm.shares">
     <p>url: {{share.url}} desc: {{share.description}}</p>
-    <span ng-repeat="item in share.tags track by $index">{{ item }}  </span>
-    <button ng-click="share.vote(1)">&uarr;</button>{{share.upvotes}}
-    <button ng-click="share.vote(-1)">&darr;</button>{{share.downvotes}}
-    <button ng-click="share.vote(0)">clear</button>
+    <span>tags:</span>
+    <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
+    <button ng-click="vm.vote(share, 1)">&uarr;</button>{{share.upvotes}}
+    <button ng-click="vm.vote(share, -1)">&darr;</button>{{share.downvotes}}
+    <button ng-click="vm.vote(share, 0)">clear votes</button>
   </li>
 </ul>
