@@ -1,10 +1,17 @@
-$bg-color: #FFF;
-$alt-bg-color: #F4F4F4;
+$darkestblue: #666871;
+$darkblue: #6A738D;
+$darkgold: #594A2F;
+$gold: #7D6E43;
+$brown: #3D3122;
+$dull: #F2F3F0;
 
-$bold-color: #E84E01;
-$alt-bold-color: #4F9EE5;
+$bg-color: $gold;
+$alt-bg-color: $gold;
 
-$accent-color: #6067B0;
-$accent-color-dark: #4d5196;
-$alt-accent-color: #54CC14;
-$alt-accent-color-dark: #44B209;
+$bold-color: $gold;
+$alt-bold-color: $gold;
+
+$accent-color: $gold;
+$accent-color-dark: $gold;
+$alt-accent-color: $darkestblue;
+$alt-accent-color-dark: $gold;

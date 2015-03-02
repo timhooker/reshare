@@ -43,7 +43,9 @@ app.config(['$routeProvider', function($routeProvider) {
   self.vote = function(index, share, num) {
     sharesService.vote(share._id, num).then(function(data){
       sharesService.getByShareId(share._id).then(function(data){
-        self.shares.splice(index, 1, data);
+        share.upvotes = data.upvotes;
+        share.downvotes = data.downvotes;
+        share.clearvotes = data.clearvotes;
       });
     });
   };
@@ -51,6 +53,7 @@ app.config(['$routeProvider', function($routeProvider) {
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
       var comment = data;
+      console.log(data.created);
       share.comments.push(comment);
       share.newComment = '';
     });
@@ -65,10 +68,13 @@ app.config(['$routeProvider', function($routeProvider) {
   self.toggleComments = function (share) {
     if (!share.showComments) {
       share.showComments = true;
+      if (share.showComments === false) {
+        return true;
+      }
       self.listComments(share);
     } else {
       share.showComments = false;
     }
-  };
+  }
 
 }]);

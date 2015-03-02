@@ -61,12 +61,12 @@ p {
   margin-bottom: 1em; }
 
 a {
-  color: #4F9EE5;
+  color: #7D6E43;
   text-decoration: none;
   outline: none; }
 
 a:hover {
-  color: #54CC14; }
+  color: #666871; }
 
 td {
   padding: 0.25em 0.5em; }
@@ -116,7 +116,7 @@ button {
   color: inherit; }
 
 .main-nav-link:hover {
-  background: #54CC14;
+  background: #666871;
   color: inherit; }
 
 .main-nav-link.active {

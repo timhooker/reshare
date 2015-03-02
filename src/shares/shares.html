@@ -33,14 +33,14 @@
     <p>url: {{share.url}} desc: {{share.description}}</p>
     <span>tags:</span>
     <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
-    <button ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
-    <button ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
-    <button ng-click="vm.vote($index, share, 0)">clear votes</button>
+    <button title="upvote" ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
+    <button title="downvote" ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
+    <button title="clear vote" ng-click="vm.vote($index, share, 0)">clear votes</button>
     <span>Comments</span>
     <button ng-click="vm.toggleComments(share)">Show Comments</button>
     <ul ng-show="share.showComments">
       <li ng-repeat="comment in share.comments | orderBy: 'created'">
-        <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
+        <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created | date:"MM/dd/yyyy 'at' h:mma" }}</span></p>
       </li>
       <li>
         <form ng-submit="vm.addComment(share)">
