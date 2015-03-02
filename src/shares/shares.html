@@ -39,7 +39,7 @@
     <span>Comments</span>
     <button ng-click="vm.toggleComments(share)">Show Comments</button>
     <ul ng-show="share.showComments">
-      <li ng-repeat="comment in share.comments">
+      <li ng-repeat="comment in share.comments | orderBy: 'created'">
         <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
       </li>
       <li>
