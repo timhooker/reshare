@@ -42,13 +42,6 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 
   self.vote = function(share, num) {
-    if (num === 1) {
-      ++share.upvotes;
-      var value = 'upvotes';
-    } else if (num === -1) {
-      var value = 'downvotes';
-      ++share.downvotes;
-    }
     sharesService.vote(share._id, num).then(function(data) {
       share[value] = data;
       sharesService.getByShareId(share._id).then(function(data){
