@@ -1,5 +1,5 @@
 app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', 'usersService', '$log', function($location, StringUtil, usersService, $log) {
+  ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
     var self = this;
 
     self.isActive = function (path) {
@@ -10,8 +10,5 @@ app.controller('MainNavCtrl',
       return StringUtil.startsWith($location.path(), path);
     };
 
-    self.currentUser = undefined;
-    usersService.getCurrentUser().then(function(data) {
-      self.currentUser = data;
-    });
+    self.currentUser = currentUser;
   }]);

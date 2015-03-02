@@ -20,6 +20,8 @@ app.config(['$routeProvider', function($routeProvider) {
 
   self.newShare = Share();
 
+  self.currentUser = currentUser;
+
   refreshShares = function() {
     sharesService.list().then(function(data){
       self.shares = data;
@@ -35,7 +37,6 @@ app.config(['$routeProvider', function($routeProvider) {
         return existingShare._id !== share._id;
       });
       refreshShares();
-
     });
   };
 

@@ -2,7 +2,7 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', 'usersService', '$log', function($location, StringUtil, usersService, $log) {
+  ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
     var self = this;
 
     self.isActive = function (path) {
@@ -13,10 +13,7 @@ app.controller('MainNavCtrl',
       return StringUtil.startsWith($location.path(), path);
     };
 
-    self.currentUser = undefined;
-    usersService.getCurrentUser().then(function(data) {
-      self.currentUser = data;
-    });
+    self.currentUser = currentUser;
   }]);
 
 app.factory('Share', ['$log', function($log) {
@@ -74,6 +71,8 @@ app.config(['$routeProvider', function($routeProvider) {
 
   self.newShare = Share();
 
+  self.currentUser = currentUser;
+
   refreshShares = function() {
     sharesService.list().then(function(data){
       self.shares = data;
@@ -89,7 +88,6 @@ app.config(['$routeProvider', function($routeProvider) {
         return existingShare._id !== share._id;
       });
       refreshShares();
-
     });
   };
 
@@ -221,11 +219,19 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
   };
 }]);
 
-app.factory('currentUser', ['usersService', function(usersService) {
+app.factory('currentUser', ['$http', function($http) {
 
-  return {
+  var current = {
     user: undefined
   };
+
+  $http.get('/api/users/me').then(function(result) {
+    current.user = result.data;
+  }).catch(function(err) {
+    current.user = undefined;
+  });
+
+  return current;
 }]);
 
 app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {

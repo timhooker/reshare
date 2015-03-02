@@ -1,6 +1,14 @@
-app.factory('currentUser', ['usersService', function(usersService) {
+app.factory('currentUser', ['$http', function($http) {
 
-  return {
+  var current = {
     user: undefined
   };
+
+  $http.get('/api/users/me').then(function(result) {
+    current.user = result.data;
+  }).catch(function(err) {
+    current.user = undefined;
+  });
+
+  return current;
 }]);
