@@ -2,7 +2,7 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', 'usersService', '$log', function($location, StringUtil, usersService, $log) {
+  ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
     var self = this;
 
     self.isActive = function (path) {
@@ -13,17 +13,13 @@ app.controller('MainNavCtrl',
       return StringUtil.startsWith($location.path(), path);
     };
 
-    self.currentUser = undefined;
-    usersService.getCurrentUser().then(function(data) {
-      self.currentUser = data;
-    });
+    self.currentUser = currentUser;
   }]);
 
 app.factory('Share', ['$log', function($log) {
 
   return function(spec) {
     spec = spec || {};
-    $log.log('new');
 
     var self = {
       url: spec.url,
@@ -44,8 +40,7 @@ app.factory('Share', ['$log', function($log) {
         self.tags.splice(0, 0, tag);
       },
 
-      removeTag: function(index, $event) {
-        $event.preventDefault();
+      removeTag: function(index) {
         self.tags.splice(index, 1);
       }
     };
@@ -69,13 +64,14 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', function ($log, sharesService, shares, Share) {
+.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', 'currentUser', function ($log, sharesService, shares, Share, currentUser) {
   var self = this;
 
   self.shares = shares;
-  console.log(self.shares);
 
   self.newShare = Share();
+
+  self.currentUser = currentUser;
 
   refreshShares = function() {
     sharesService.list().then(function(data){
@@ -87,24 +83,19 @@ app.config(['$routeProvider', function($routeProvider) {
     var share = self.newShare;
     self.newShare = Share();
 
-    sharesService.addShare(share).then(function () {
-
+    sharesService.addShare(share).then(function (data) {
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
       refreshShares();
-
     });
   };
 
-  self.vote = function(share, num) {
-    sharesService.vote(share._id, num).then(function(data) {
-      share[value] = data;
+  self.vote = function(index, share, num) {
       sharesService.getByShareId(share._id).then(function(data){
-        self.addShare(data);
+        self.shares.splice(index, 1, data);
       });
     });
-    refreshShares();
   };
 
 }]);
@@ -225,6 +216,21 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
       return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));
     }
   };
+}]);
+
+app.factory('currentUser', ['$http', function($http) {
+
+  var current = {
+    user: undefined
+  };
+
+  $http.get('/api/users/me').then(function(result) {
+    current.user = result.data;
+  }).catch(function(err) {
+    current.user = undefined;
+  });
+
+  return current;
 }]);
 
 app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http, $q, $log, ajaxHelper) {

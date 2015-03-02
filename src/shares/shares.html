@@ -2,27 +2,29 @@
 
 <h2>Add Share</h2>
 <!-- // ADD a share vm.addShare(); -->
-<form ng-submit="vm.addShare()">
-  <label>url
-    <input ng-model="vm.newShare.url">
-  </label><br>
-  <label>description
-    <input ng-model="vm.newShare.description">
-  </label>
-</form>
-<form ng-submit="vm.newShare.addTag('')">
-  <label>tags
-    <input ng-model="vm.newShare.tags[0]">
-  </label>
-  <button type="submit">+</button>
-</form>
-<div>
+<div class="add-share" ng-show="vm.currentUser.user.userId">
+  <form ng-submit="vm.addShare()">
+    <label>url
+      <input ng-model="vm.newShare.url">
+    </label><br>
+    <label>description
+      <input ng-model="vm.newShare.description">
+    </label>
+  </form>
+  <form ng-submit="vm.newShare.addTag('')">
+    <label>tags
+      <input ng-model="vm.newShare.tags[0]">
+    </label>
+    <button type="submit">+</button>
+  </form>
+  <div>
     <span ng-if="$index !== 0" ng-repeat="item in vm.newShare.tags track by $index" ng-click="vm.newShare.addTag(item)">
       {{ item }}
-      <button ng-click="vm.newShare.removeTag($index, $event)">X</button>
+      <button ng-click="vm.newShare.removeTag($index)">X</button>
     </span>
+  </div>
+  <button ng-click="vm.addShare()">add</button><br>
 </div>
-<button ng-click="vm.addShare()">add</button><br>
 
 <!-- // Show a share vm.shares -->
 <h4>Shares</h4>
@@ -31,8 +33,8 @@
     <p>url: {{share.url}} desc: {{share.description}}</p>
     <span>tags:</span>
     <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
-    <button ng-click="vm.vote(share, 1)">&uarr;</button>{{share.upvotes}}
-    <button ng-click="vm.vote(share, -1)">&darr;</button>{{share.downvotes}}
-    <button ng-click="vm.vote(share, 0)">clear votes</button>
+    <button ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
+    <button ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
+    <button ng-click="vm.vote($index, share, 0)">clear votes</button>
   </li>
 </ul>

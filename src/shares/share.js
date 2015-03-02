@@ -2,7 +2,6 @@ app.factory('Share', ['$log', function($log) {
 
   return function(spec) {
     spec = spec || {};
-    $log.log('new');
 
     var self = {
       url: spec.url,
@@ -23,8 +22,7 @@ app.factory('Share', ['$log', function($log) {
         self.tags.splice(0, 0, tag);
       },
 
-      removeTag: function(index, $event) {
-        $event.preventDefault();
+      removeTag: function(index) {
         self.tags.splice(index, 1);
       }
     };
