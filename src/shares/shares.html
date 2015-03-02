@@ -1,8 +1,8 @@
 <h1>Shares</h1>
 
-<h2>Add Share</h2>
 <!-- // ADD a share vm.addShare(); -->
 <div class="add-share" ng-show="vm.currentUser.user.userId">
+  <h2>Add Share</h2>
   <form ng-submit="vm.addShare()">
     <label>url
       <input ng-model="vm.newShare.url">
