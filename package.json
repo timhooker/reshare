@@ -1,4 +1,12 @@
 {
+  "name": "reshare",
+  "version": "0.0.1",
+
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:timhooker/reshare.git"
+  },
+
   "dependencies": {
     "body-parser": "^1.10.1",
     "colors": "^1.0.3",
