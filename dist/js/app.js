@@ -17,82 +17,6 @@ app.controller('MainNavCtrl',
     
   }]);
 
-app.config(['$routeProvider', function($routeProvider) {
-  var routeDefinition = {
-    templateUrl: 'users/user.html',
-    controller: 'UserCtrl',
-    controllerAs: 'vm',
-    resolve: {
-      user: ['$route', 'usersService', function ($route, usersService) {
-        var routeParams = $route.current.params;
-        return usersService.getByUserId(routeParams.userid);
-      }],
-      github: ['$route', '$http', function ($route, $http) {
-        var routeParams = $route.current.params;
-        return $http.get('https://api.github.com/users/' + routeParams.userid);
-      }]
-    }
-  };
-
-  $routeProvider.when('/users/:userid', routeDefinition);
-}])
-.controller('UserCtrl', ['user', 'github', function (user, github) {
-  this.user = user;
-  this.github = github.data;
-  console.log(this.github);
-}]);
-
-app.factory('User', function () {
-  return function (spec) {
-    spec = spec || {};
-    return {
-      userId: spec.userId || '',
-      role: spec.role || 'user'
-    };
-  };
-});
-
-app.config(['$routeProvider', function($routeProvider) {
-  var routeDefinition = {
-    templateUrl: 'users/users.html',
-    controller: 'UsersCtrl',
-    controllerAs: 'vm',
-    resolve: {
-      users: ['usersService', function (usersService) {
-        return usersService.list();
-      }]
-    }
-  };
-
-  $routeProvider.when('/users', routeDefinition);
-}])
-.controller('UsersCtrl', ['users', 'usersService', 'User', function (users, usersService, User) {
-  var self = this;
-
-  self.users = users;
-
-  self.newUser = User();
-
-  self.addUser = function () {
-    // Make a copy of the 'newUser' object
-    var user = User(self.newUser);
-
-    // Add the user to our service
-    usersService.addUser(user).then(function () {
-      // If the add succeeded, remove the user from the users array
-      self.users = self.users.filter(function (existingUser) {
-        return existingUser.userId !== user.userId;
-      });
-
-      // Add the user to the users array
-      self.users.push(user);
-    });
-
-    // Clear our newUser property
-    self.newUser = User();
-  };
-}]);
-
 app.factory('Share', ['$log', function($log) {
 
   return function(spec) {
@@ -213,6 +137,82 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
+app.config(['$routeProvider', function($routeProvider) {
+  var routeDefinition = {
+    templateUrl: 'users/user.html',
+    controller: 'UserCtrl',
+    controllerAs: 'vm',
+    resolve: {
+      user: ['$route', 'usersService', function ($route, usersService) {
+        var routeParams = $route.current.params;
+        return usersService.getByUserId(routeParams.userid);
+      }],
+      github: ['$route', '$http', function ($route, $http) {
+        var routeParams = $route.current.params;
+        return $http.get('https://api.github.com/users/' + routeParams.userid);
+      }]
+    }
+  };
+
+  $routeProvider.when('/users/:userid', routeDefinition);
+}])
+.controller('UserCtrl', ['user', 'github', function (user, github) {
+  this.user = user;
+  this.github = github.data;
+  console.log(this.github);
+}]);
+
+app.factory('User', function () {
+  return function (spec) {
+    spec = spec || {};
+    return {
+      userId: spec.userId || '',
+      role: spec.role || 'user'
+    };
+  };
+});
+
+app.config(['$routeProvider', function($routeProvider) {
+  var routeDefinition = {
+    templateUrl: 'users/users.html',
+    controller: 'UsersCtrl',
+    controllerAs: 'vm',
+    resolve: {
+      users: ['usersService', function (usersService) {
+        return usersService.list();
+      }]
+    }
+  };
+
+  $routeProvider.when('/users', routeDefinition);
+}])
+.controller('UsersCtrl', ['users', 'usersService', 'User', function (users, usersService, User) {
+  var self = this;
+
+  self.users = users;
+
+  self.newUser = User();
+
+  self.addUser = function () {
+    // Make a copy of the 'newUser' object
+    var user = User(self.newUser);
+
+    // Add the user to our service
+    usersService.addUser(user).then(function () {
+      // If the add succeeded, remove the user from the users array
+      self.users = self.users.filter(function (existingUser) {
+        return existingUser.userId !== user.userId;
+      });
+
+      // Add the user to the users array
+      self.users.push(user);
+    });
+
+    // Clear our newUser property
+    self.newUser = User();
+  };
+}]);
+
 app.factory('ajaxHelper', ['$log', function($log) {
   return {
     call: function(p) {
@@ -235,6 +235,44 @@ app.factory('StringUtil', function() {
     }
   };
 });
+
+app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
+
+  return {
+    list: function () {
+      return ajaxHelper.call($http.get('/api/res'));
+    },
+
+    getByShareId: function (shareId) {
+      if (!shareId) {
+        throw new Error('getByShareId requires a share id');
+      }
+      return ajaxHelper.call($http.get('/api/res/' + shareId));
+    },
+
+    addShare: function (share) {
+      return ajaxHelper.call($http.post('/api/res', share));
+    },
+
+    vote: function(id, num) {
+      var vote = { vote: num };
+      return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));
+    },
+
+    addComment: function (shareId, text) {
+      var comment = { text: text };
+      return ajaxHelper.call($http.post('/api/res/' + shareId + '/comments', comment));
+    },
+
+    removeComment: function (shareId, id) {
+      return ajaxHelper.call($http.delete('/api/res/' + shareId + '/comments/' + id));
+    },
+
+    listComments: function (shareId) {
+      return ajaxHelper.call($http.get('/api/res/' + shareId + '/comments'));
+    }
+  };
+}]);
 
 app.factory('currentUser', ['$http', function($http) {
 
@@ -278,44 +316,6 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
       return ajaxHelper.call($http.get('/api/users/me'));
     }
 
-  };
-}]);
-
-app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
-
-  return {
-    list: function () {
-      return ajaxHelper.call($http.get('/api/res'));
-    },
-
-    getByShareId: function (shareId) {
-      if (!shareId) {
-        throw new Error('getByShareId requires a share id');
-      }
-      return ajaxHelper.call($http.get('/api/res/' + shareId));
-    },
-
-    addShare: function (share) {
-      return ajaxHelper.call($http.post('/api/res', share));
-    },
-
-    vote: function(id, num) {
-      var vote = { vote: num };
-      return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));
-    },
-
-    addComment: function (shareId, text) {
-      var comment = { text: text };
-      return ajaxHelper.call($http.post('/api/res/' + shareId + '/comments', comment));
-    },
-
-    removeComment: function (shareId, id) {
-      return ajaxHelper.call($http.delete('/api/res/' + shareId + '/comments/' + id));
-    },
-
-    listComments: function (shareId) {
-      return ajaxHelper.call($http.get('/api/res/' + shareId + '/comments'));
-    }
   };
 }]);
 
