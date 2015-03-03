@@ -87,6 +87,10 @@
 .share-item {
   margin-left: 5em;
 
+  p {
+    word-break: break-word;
+  }
+
   @include media($mobile) {
     margin: 0 0 7em 0;
   }
@@ -97,6 +101,7 @@
   font-weight: 800;
   margin-top: 0.5em;
   display: inline-block;
+  word-break: break-word;
 
   &:hover {
     color: $accent-color;

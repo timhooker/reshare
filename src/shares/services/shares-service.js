@@ -16,6 +16,10 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
       return ajaxHelper.call($http.post('/api/res', share));
     },
 
+    removeShare: function (shareId) {
+      return ajaxHelper.call($http.delete('/api/res/' + shareId));
+    },
+
     vote: function(id, num) {
       var vote = { vote: num };
       return ajaxHelper.call($http.post('/api/res/' + id + '/votes', vote));

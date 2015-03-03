@@ -286,6 +286,8 @@ li.ng-scope {
 
 .share-item {
   margin-left: 5em; }
+  .share-item p {
+    word-break: break-word; }
   @media screen and (max-width: 700px)  {
     .share-item {
       margin: 0 0 7em 0; } }
@@ -294,7 +296,8 @@ li.ng-scope {
   font-size: 1.25em;
   font-weight: 800;
   margin-top: 0.5em;
-  display: inline-block; }
+  display: inline-block;
+  word-break: break-word; }
   .share-item-url:hover {
     color: #6A738D; }
 

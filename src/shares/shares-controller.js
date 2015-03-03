@@ -3,20 +3,27 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'shares/shares.html',
     controller: 'SharesCtrl',
     controllerAs: 'vm',
-    resolve: {
-      shares: ['sharesService', function (sharesService) {
-        return sharesService.list();
-      }]
-    }
+    // resolve: {
+    //   shares: ['sharesService', function (sharesService) {
+    //     return sharesService.list();
+    //   }]
+    // }
   };
 
   $routeProvider.when('/', routeDefinition);
   $routeProvider.when('/shares', routeDefinition);
 }])
-.controller('SharesCtrl', ['$log', 'sharesService', 'shares', 'Share', 'currentUser', function ($log, sharesService, shares, Share, currentUser) {
+.controller('SharesCtrl', ['$log', 'sharesService', 'Share', 'currentUser', function ($log, sharesService, Share, currentUser) {
   var self = this;
 
-  self.shares = shares;
+  sharesService.list().then(function(data){
+    self.shares = data;
+    self.shares.forEach(function(share) {
+      self.listComments(share);
+      share.shareStatus = 'Show';
+    });
+  });
+  // self.shares = shares;
 
   self.newShare = Share();
 
@@ -39,6 +46,14 @@ app.config(['$routeProvider', function($routeProvider) {
       refreshShares();
     });
   };
+  
+  self.removeShare = function(share) {
+    sharesService.removeShare(share._id).then(function (data) {
+      self.shares = self.shares.filter(function (existingShare) {
+        return existingShare._id !== share._id;
+      });
+    });
+  }
 
   self.vote = function(index, share, num) {
     sharesService.vote(share._id, num).then(function(data){
@@ -74,12 +89,10 @@ app.config(['$routeProvider', function($routeProvider) {
   self.toggleComments = function (share) {
     if (!share.showComments) {
       share.showComments = true;
-      if (share.showComments === false) {
-        return true;
-      }
-      self.listComments(share);
+      share.shareStatus = 'Hide';
     } else {
       share.showComments = false;
+      share.shareStatus = 'Show';
     }
   };
 

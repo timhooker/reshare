@@ -1,14 +1,16 @@
 <!-- // Show a share vm.shares -->
 <div class="shares-list">
-  <h1 class="shares-header">Shares</h1>
+  <h1 class="shares-header">ReShare</h1>
   <ul>
     <li class="share-item" ng-repeat="share in vm.shares">
-      <p><a class="share-item-url" href="{{share.url}}">{{share.url}}</a></p>
-      <p>{{share.description}}</p>
-      <div class="tags-section">
-        <span>tags:</span>
-        <span class="tags" ng-repeat="item in share.tags track by $index">{{ item }}   </span><br>
-      </div>
+      <button ng-if="share.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'"ng-click="vm.removeShare(share)">X</button>
+      <p><a class="share-item-url" href="{{ share.url }}">{{share.url}}</a></p>
+      <p>{{share.description}}
+        <div class="tags-section">
+          <span class="tags" ng-repeat="item in share.tags track by $index">{{ item }}   </span>
+        </div>
+        <p class="share-item-submited">ReShared by {{share.userId}}</p>
+      </p>
       <div class="votes-section">
         <button class="votes-btn" ng-click="vm.vote($index, share, 1)">&uarr;</button>
         <span class="votes">{{share.upvotes}}</span>
@@ -17,12 +19,17 @@
         <button class="undo-vote" ng-click="vm.vote($index, share, 0)">UNDO</button>
       </div>
       <div class="comments-section">
-        <span>Comments</span>
         <ul>
-          <!-- <li ng-repeat="comment in vm.listComments(share)">
-            <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
-          </li> -->
+          <li ng-repeat="comment in share.comments | orderBy: 'created'" ng-show="share.showComments">
+            <p>"{{ comment.text }}"</p>
+            <p>
+              Created by <span>{{ comment.userId }} on {{ comment.created | date:"MM/dd/yyyy 'at' h:mma" }}</span>
+              <button ng-if="comment.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'" ng-click="vm.removeComment(share, comment)">X</button>
+            </p>
+          </li>
+
           <li>
+          <button ng-click="vm.toggleComments(share)">{{ share.shareStatus }} {{ share.comments.length }} comments</button>
             <form class="comment-form" ng-submit="vm.addComment(share)">
               <textarea placeholder="Add comment"ng-model="share.newComment" name="text"></textarea>
               <button class="add-comment">ADD</button>
@@ -39,7 +46,7 @@
   <h2 class="add-share-header">Add Share</h2>
   <form ng-submit="vm.addShare()">
     <label>url
-      <input ng-model="vm.newShare.url">
+      <input ng-model="vm.newShare.url" placeholder="http://myexample.com">
     </label><br>
     <label>description
       <textarea ng-model="vm.newShare.description"></textarea>
@@ -63,7 +70,7 @@
 </div>
 
 <!-- // Show a share vm.shares -->
-<h4>Shares</h4>
+<!-- <h4>Shares</h4>
 <ul>
   <li ng-repeat="share in vm.shares">
     <p>url: {{share.url}} desc: {{share.description}}</p>
@@ -90,4 +97,4 @@
       </li>
     </ul>
   </li>
-</ul>
+</ul> -->
