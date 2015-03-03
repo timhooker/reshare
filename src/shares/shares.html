@@ -1,4 +1,31 @@
-<h1>Shares</h1>
+<!-- // Show a share vm.shares -->
+<div class="shares-list">
+  <h1>Shares</h1>
+  <ul>
+    <li ng-repeat="share in vm.shares">
+      <p>url: {{share.url}} desc: {{share.description}}</p>
+      <span>tags:</span>
+      <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
+      <button ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
+      <button ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
+      <button ng-click="vm.vote($index, share, 0)">clear votes</button>
+      <span>Comments</span>
+      <ul>
+        <!-- <li ng-repeat="comment in vm.listComments(share)">
+          <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
+        </li> -->
+        <li>
+          <form ng-submit="vm.addComment(share)">
+            <label>Add Comment
+              <textarea ng-model="share.newComment" name="text"></textarea>
+            </label>
+            <button>Add</button>
+          </form>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
 
 <!-- // ADD a share vm.addShare(); -->
 <div class="add-share" ng-show="vm.currentUser.user.userId">
@@ -25,30 +52,3 @@
   </div>
   <button ng-click="vm.addShare()">add</button><br>
 </div>
-
-<!-- // Show a share vm.shares -->
-<h4>Shares</h4>
-<ul>
-  <li ng-repeat="share in vm.shares">
-    <p>url: {{share.url}} desc: {{share.description}}</p>
-    <span>tags:</span>
-    <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
-    <button ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
-    <button ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
-    <button ng-click="vm.vote($index, share, 0)">clear votes</button>
-    <span>Comments</span>
-    <ul>
-      <!-- <li ng-repeat="comment in vm.listComments(share)">
-        <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
-      </li> -->
-      <li>
-        <form ng-submit="vm.addComment(share)">
-          <label>Add Comment
-            <textarea ng-model="share.newComment" name="text"></textarea>
-          </label>
-          <button>Add</button>
-        </form>
-      </li>
-    </ul>
-  </li>
-</ul>
