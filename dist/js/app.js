@@ -130,29 +130,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-app.factory('ajaxHelper', ['$log', function($log) {
-  return {
-    call: function(p) {
-      return p.then(function (result) {
-        return result.data;
-      })
-      .catch(function (error) {
-        $log.log(error);
-      });
-    }
-  };
-}]);
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
-
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
     templateUrl: 'users/user.html',
@@ -223,6 +200,29 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
+app.factory('ajaxHelper', ['$log', function($log) {
+  return {
+    call: function(p) {
+      return p.then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        $log.log(error);
+      });
+    }
+  };
+}]);
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
+
 app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
 
   return {
@@ -264,11 +264,15 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
 app.factory('currentUser', ['$http', function($http) {
 
   var current = {
-    user: undefined
+    user: undefined,
+    github: undefined
   };
 
   $http.get('/api/users/me').then(function(result) {
     current.user = result.data;
+    $http.get('https://api.github.com/users/' + current.user.userId ).then(function(result) {
+      current.github = result.data;
+    });
   }).catch(function(err) {
     current.user = undefined;
   });

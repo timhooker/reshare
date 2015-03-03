@@ -84,6 +84,12 @@ button {
   color: #FFF;
   font-size: 1em; }
 
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 .root-content {
   padding: 2em; }
 
@@ -129,8 +135,12 @@ li.ng-scope {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
-html {
-  box-sizing: border-box; }
+img.main-nav-link {
+  height: 50px;
+  width: auto;
+  padding: .2em .2em;
+  vertical-align: bottom;
+  border-radius: 50%; }
 
-*, *:before, *:after {
-  box-sizing: inherit; }
+.main-nav-user {
+  float: right; }

@@ -1,8 +1,9 @@
 @import 'reset';
 @import 'colors';
 @import 'defaults';
+@import 'bourbon/bourbon';
+@import 'neat/neat';
 @import 'fonts';
 @import 'common-layout';
 @import 'angular';
-@import 'bourbon/bourbon';
-@import 'neat/neat';
+@import 'main-nav';
