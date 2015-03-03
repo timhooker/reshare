@@ -11,4 +11,5 @@ app.controller('MainNavCtrl',
     };
 
     self.currentUser = currentUser;
+    
   }]);

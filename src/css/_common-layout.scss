@@ -1,3 +1,13 @@
+$mobile: new-breakpoint(max-width 700px 4);
+
+main {
+  @include outer-container();
+
+  @include media($mobile) {
+    margin-top: 4em;
+  }
+}
+
 .root-content {
   padding: 2em;
 }
@@ -9,9 +19,33 @@
 }
 
 .main-nav {
-  background: #6067b0;
+  background: $accent-color-dark;
   color: #FFF;
-  padding: 0 2em;
+  font-family: $primary-font;
+  height: 4.5em;
+
+  @include media($mobile) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    background-color: $accent-color;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    z-index: -1;
+
+    @include media($mobile) {
+      visibility: hidden;
+    }
+  }
 }
 
 .app-icon {
@@ -29,21 +63,27 @@
 }
 
 .main-nav-link {
+  height: 4.5em;
   display: inline-block;
-  padding: 1em 1em;
+  padding: 1.5em;
   color: inherit;
+
+  @include media($mobile) {
+    display: none;
+  }
 }
 
 .main-nav-link:hover {
-  background: $alt-accent-color;
-  color: inherit;
+  background: $dull;
+  color: $accent-color-dark;
 }
 
 .main-nav-link.active {
-  background: #4d5196;
+  background: $accent-color;
+  color: inherit;
 }
 
 li.ng-scope {
-  background-color: #eee;
-  padding: 1em;
+  background-color: $dull;
+  // padding: 1em;
 }

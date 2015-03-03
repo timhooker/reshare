@@ -1,8 +1,9 @@
 body {
-  font-family: sans-serif;
+  font-family: $primary-font;
+  font-weight: 300;
   line-height: 1.4em;
   background: #FFF;
-  color: #444;
+  color: #333;
 }
 
 h1 { font-size: 2em; margin: .67em 0 }
@@ -28,7 +29,7 @@ a {
 }
 
 a:hover {
-  color: $alt-accent-color;
+  color: $accent-color;
 }
 
 td {
@@ -36,16 +37,43 @@ td {
 }
 
 input, textarea {
+  font-family: $primary-font;
   font-size: 1em;
   border: 1px solid #DDD;
   padding: 0.25em;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  padding: 0.75em;
+  margin-bottom: 1em;
+
+  &:focus {
+    outline: none;
+    background: #D5D5D5;
+  }
+}
+
+label {
+  margin-top: 1em;
+
 }
 
 button {
+  font-family: $primary-font;
+  font-weight: 800;
+  text-transform: uppercase;
   display: inline-block;
   padding: 0.25em 0.75em;
   border: 0;
   background: #AAA;
-  color: #FFF;
+  color: $alt-bg-color;
   font-size: 1em;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    background: $accent-color-dark;
+  }
 }

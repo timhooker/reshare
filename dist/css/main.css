@@ -1,3 +1,9 @@
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   border: 0;
@@ -27,10 +33,11 @@ table {
   border-spacing: 0; }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   line-height: 1.4em;
   background: #FFF;
-  color: #444; }
+  color: #333; }
 
 h1 {
   font-size: 2em;
@@ -61,34 +68,60 @@ p {
   margin-bottom: 1em; }
 
 a {
-  color: #7D6E43;
+  color: #594A2F;
   text-decoration: none;
   outline: none; }
 
 a:hover {
-  color: #666871; }
+  color: #6A738D; }
 
 td {
   padding: 0.25em 0.5em; }
 
 input, textarea {
+  font-family: 'Open Sans', sans-serif;
   font-size: 1em;
   border: 1px solid #DDD;
-  padding: 0.25em; }
+  padding: 0.25em;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  padding: 0.75em;
+  margin-bottom: 1em; }
+  input:focus, textarea:focus {
+    outline: none;
+    background: #D5D5D5; }
+
+label {
+  margin-top: 1em; }
 
 button {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
   display: inline-block;
   padding: 0.25em 0.75em;
   border: 0;
   background: #AAA;
-  color: #FFF;
-  font-size: 1em; }
+  color: #F2F3F0;
+  font-size: 1em;
+  cursor: pointer; }
+  button:focus, button:hover {
+    outline: none;
+    background: #666871; }
 
-html {
-  box-sizing: border-box; }
-
-*, *:before, *:after {
-  box-sizing: inherit; }
+main {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  main::after {
+    clear: both;
+    content: "";
+    display: table; }
+  @media screen and (max-width: 700px)  {
+    main {
+      margin-top: 4em; } }
 
 .root-content {
   padding: 2em; }
@@ -99,9 +132,29 @@ html {
   margin-bottom: 1.5em; }
 
 .main-nav {
-  background: #6067b0;
+  background: #666871;
   color: #FFF;
-  padding: 0 2em; }
+  font-family: 'Open Sans', sans-serif;
+  height: 4.5em; }
+  @media screen and (max-width: 700px)  {
+    .main-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1; } }
+  .main-nav:after {
+    content: '';
+    background-color: #6A738D;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    z-index: -1; }
+    @media screen and (max-width: 700px)  {
+      .main-nav:after {
+        visibility: hidden; } }
 
 .app-icon {
   color: inherit; }
@@ -117,30 +170,251 @@ html {
   transform: rotate(-10deg); }
 
 .main-nav-link {
+  height: 4.5em;
   display: inline-block;
-  padding: 1em 1em;
+  padding: 1.5em;
   color: inherit; }
+  @media screen and (max-width: 700px)  {
+    .main-nav-link {
+      display: none; } }
 
 .main-nav-link:hover {
-  background: #666871;
-  color: inherit; }
+  background: #F2F3F0;
+  color: #666871; }
 
 .main-nav-link.active {
-  background: #4d5196; }
+  background: #6A738D;
+  color: inherit; }
 
 li.ng-scope {
-  background-color: #eee;
-  padding: 1em; }
+  background-color: #F2F3F0; }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
+.add-share, .share-item, .user-item, .add-user {
+  margin-top: 1.5em;
+  padding: 1em;
+  position: relative; }
+
+.add-share, .add-user {
+  background-color: #7D6E43;
+  font-family: 'Open Sans', sans-serif;
+  color: #F2F3F0;
+  margin-bottom: 5em;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 31.76157%; }
+  .add-share:last-child, .add-user:last-child {
+    margin-right: 0; }
+  .add-share:before, .add-user:before {
+    height: 0;
+    width: 0;
+    border-bottom: 10px solid #7D6E43;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 0; }
+  @media screen and (max-width: 700px)  {
+    .add-share, .add-user {
+      float: left;
+      display: block;
+      margin-right: 7.42297%;
+      width: 100%; }
+      .add-share:last-child, .add-user:last-child {
+        margin-right: 0; } }
+
+.shares-list, .users-list {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 65.88078%; }
+  .shares-list:last-child, .users-list:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 700px)  {
+    .shares-list, .users-list {
+      float: left;
+      display: block;
+      margin-right: 7.42297%;
+      width: 100%; }
+      .shares-list:last-child, .users-list:last-child {
+        margin-right: 0; } }
+
+.add-share-header {
+  margin-top: 0; }
+
+.share-item:before {
+  height: 0;
+  width: 0;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid blue;
+  border-top: 10px solid transparent; }
+
+.tags-entry, .comment-form {
+  position: relative; }
+
+.add-tag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0; }
+
+.tag-item {
+  position: relative;
+  padding: 0.5em;
+  display: inline-block;
+  margin: 1em 3em 0 0;
+  background: #F2F3F0;
+  color: #7D6E43; }
+
+.delete-tag {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0; }
+
+.add-share-btn, .add-user-btn {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 1em;
+  font-size: 1.25em; }
+
+.share-item {
+  margin-left: 5em; }
+  @media screen and (max-width: 700px)  {
+    .share-item {
+      margin: 0 0 7em 0; } }
+
+.share-item-url {
+  font-size: 1.25em;
+  font-weight: 800;
+  margin-top: 0.5em;
+  display: inline-block; }
+  .share-item-url:hover {
+    color: #6A738D; }
+
+.comments-section, .tags-section {
+  margin-top: 1em; }
+
+.tags {
+  color: #7D6E43; }
+
+.add-comment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3.5em; }
+
+.comment-form {
+  padding-right: 3.5em; }
+
+.votes-section {
+  width: 5em;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  background: #F2F3F0; }
+  @media screen and (max-width: 700px)  {
+    .votes-section {
+      top: 100%;
+      left: 0; } }
+
+.undo-vote {
+  width: 100%; }
+  @media screen and (max-width: 700px)  {
+    .undo-vote {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100; } }
+
+.votes, .votes-btn {
+  font-size: 1.25em; }
+
+.votes, .votes-btn, .undo-vote {
+  padding: 0.5em; }
+
+.select-role {
+  -webkit-appearance: none;
+  border-radius: 0;
+  border: none;
+  width: 100%;
+  font-size: 1em;
+  padding: 0.75em;
+  font-family: 'Open Sans', sans-serif;
+  position: relative; }
+  .select-role:after {
+    content: '&#8593;';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%; }
+  .select-role:focus {
+    outline: none;
+    background: #D5D5D5; }
+
+.main-nav {
+  color: #F2F3F0;
+  text-transform: uppercase; }
+
 img.main-nav-link {
-  height: 50px;
+  height: 4.6em;
   width: auto;
   padding: .2em .2em;
-  vertical-align: bottom;
-  border-radius: 50%; }
+  vertical-align: middle;
+  border: none; }
+  img.main-nav-link:hover {
+    background: none; }
 
 .main-nav-user {
   float: right; }
+
+.logo {
+  font-size: 2.5em;
+  color: #F2F3F0; }
+  .logo:hover {
+    color: #F2F3F0; }
+
+.logo-section {
+  display: inline-block;
+  width: 25%;
+  background: #6A738D;
+  padding: 1.5em; }
+  @media screen and (max-width: 700px)  {
+    .logo-section {
+      background: none; } }
+
+.menu-icon {
+  position: relative;
+  float: right;
+  padding: 1em 2em;
+  cursor: pointer;
+  display: none; }
+  .menu-icon:before {
+    content: "";
+    float: right;
+    margin-top: 0.5em;
+    width: 2em;
+    height: 0.25em;
+    background: #F2F3F0;
+    box-shadow: 0 0.6em 0 0 #F2F3F0, 0 1.2em 0 0 #F2F3F0; }
+  @media screen and (max-width: 700px)  {
+    .menu-icon {
+      display: inline-block; } }
+
+.add-share-link {
+  font-size: 1.5em;
+  max-width: 60%;
+  margin: 1em auto;
+  display: none;
+  cursor: pointer;
+  color: #F2F3F0; }
+  @media screen and (max-width: 700px)  {
+    .add-share-link {
+      display: inline-block; } }
