@@ -94,26 +94,64 @@ app.config(['$routeProvider', function($routeProvider) {
   self.vote = function(index, share, num) {
     sharesService.vote(share._id, num).then(function(data){
       sharesService.getByShareId(share._id).then(function(data){
-        self.shares.splice(index, 1, data);
+        share.upvotes = data.upvotes;
+        share.downvotes = data.downvotes;
+        share.clearvotes = data.clearvotes;
       });
     });
   };
 
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
-      sharesService.getByShareId(share._id).then(function(data){
-        self.shares.splice(index, 1, data);
-      });
+      var comment = data;
+      console.log(data.created);
+      share.comments.push(comment);
+      share.newComment = '';
     });
   };
 
   self.listComments = function (share) {
     sharesService.listComments(share._id).then(function(data) {
-      return data;
+      share.comments = data;
     });
   };
 
+  self.toggleComments = function (share) {
+    if (!share.showComments) {
+      share.showComments = true;
+      if (share.showComments === false) {
+        return true;
+      }
+      self.listComments(share);
+    } else {
+      share.showComments = false;
+    }
+  }
+
 }]);
+
+app.factory('ajaxHelper', ['$log', function($log) {
+  return {
+    call: function(p) {
+      return p.then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        $log.log(error);
+      });
+    }
+  };
+}]);
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
 
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
@@ -185,29 +223,6 @@ app.config(['$routeProvider', function($routeProvider) {
   };
 }]);
 
-app.factory('ajaxHelper', ['$log', function($log) {
-  return {
-    call: function(p) {
-      return p.then(function (result) {
-        return result.data;
-      })
-      .catch(function (error) {
-        $log.log(error);
-      });
-    }
-  };
-}]);
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
-
 app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
 
   return {
@@ -249,11 +264,15 @@ app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $lo
 app.factory('currentUser', ['$http', function($http) {
 
   var current = {
-    user: undefined
+    user: undefined,
+    github: undefined
   };
 
   $http.get('/api/users/me').then(function(result) {
     current.user = result.data;
+    $http.get('https://api.github.com/users/' + current.user.userId ).then(function(result) {
+      current.github = result.data;
+    });
   }).catch(function(err) {
     current.user = undefined;
   });

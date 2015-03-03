@@ -67,12 +67,12 @@ p {
   margin-bottom: 1em; }
 
 a {
-  color: #4F9EE5;
+  color: #7D6E43;
   text-decoration: none;
   outline: none; }
 
 a:hover {
-  color: #54CC14; }
+  color: #666871; }
 
 td {
   padding: 0.25em 0.5em; }
@@ -90,6 +90,7 @@ button {
   color: #FFF;
   font-size: 1em; }
 
+<<<<<<< HEAD
 main {
   max-width: 68em;
   margin-left: auto;
@@ -98,6 +99,13 @@ main {
     clear: both;
     content: "";
     display: table; }
+=======
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+>>>>>>> aac4d8633d656b23b1d87d48010e0131fee3f39d
 
 .root-content {
   padding: 2em; }
@@ -131,7 +139,7 @@ main {
   color: inherit; }
 
 .main-nav-link:hover {
-  background: #54CC14;
+  background: #666871;
   color: inherit; }
 
 .main-nav-link.active {
@@ -144,6 +152,7 @@ li.ng-scope {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
+<<<<<<< HEAD
 .add-shares {
   float: left;
   display: block;
@@ -177,3 +186,14 @@ li.ng-scope {
       width: 100%; }
       .shares-list:last-child {
         margin-right: 0; } }
+=======
+img.main-nav-link {
+  height: 50px;
+  width: auto;
+  padding: .2em .2em;
+  vertical-align: bottom;
+  border-radius: 50%; }
+
+.main-nav-user {
+  float: right; }
+>>>>>>> aac4d8633d656b23b1d87d48010e0131fee3f39d
