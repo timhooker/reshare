@@ -33,7 +33,13 @@
   @include media($mobile) {
     @include span-columns(4);
   }
+
+  &:after {
+    content: '';
+    padding-right: 100%;
+  }
 }
+
 
 .add-share-header {
   margin-top: 0;
