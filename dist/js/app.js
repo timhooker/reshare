@@ -14,6 +14,7 @@ app.controller('MainNavCtrl',
     };
 
     self.currentUser = currentUser;
+    
   }]);
 
 app.factory('Share', ['$log', function($log) {
@@ -126,32 +127,9 @@ app.config(['$routeProvider', function($routeProvider) {
     } else {
       share.showComments = false;
     }
-  }
+  };
 
 }]);
-
-app.factory('ajaxHelper', ['$log', function($log) {
-  return {
-    call: function(p) {
-      return p.then(function (result) {
-        return result.data;
-      })
-      .catch(function (error) {
-        $log.log(error);
-      });
-    }
-  };
-}]);
-
-// A little string utility... no biggie
-app.factory('StringUtil', function() {
-  return {
-    startsWith: function (str, subStr) {
-      str = str || '';
-      return str.slice(0, subStr.length) === subStr;
-    }
-  };
-});
 
 app.config(['$routeProvider', function($routeProvider) {
   var routeDefinition = {
@@ -222,6 +200,29 @@ app.config(['$routeProvider', function($routeProvider) {
     self.newUser = User();
   };
 }]);
+
+app.factory('ajaxHelper', ['$log', function($log) {
+  return {
+    call: function(p) {
+      return p.then(function (result) {
+        return result.data;
+      })
+      .catch(function (error) {
+        $log.log(error);
+      });
+    }
+  };
+}]);
+
+// A little string utility... no biggie
+app.factory('StringUtil', function() {
+  return {
+    startsWith: function (str, subStr) {
+      str = str || '';
+      return str.slice(0, subStr.length) === subStr;
+    }
+  };
+});
 
 app.factory('sharesService', ['$http', '$log', 'ajaxHelper', function($http, $log, ajaxHelper) {
 

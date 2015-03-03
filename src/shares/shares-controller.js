@@ -75,6 +75,6 @@ app.config(['$routeProvider', function($routeProvider) {
     } else {
       share.showComments = false;
     }
-  }
+  };
 
 }]);

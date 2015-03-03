@@ -1,15 +1,184 @@
-.add-shares {
-  @include span-columns(4);
-  @include media($mobile) {
-    @include span-columns(4);
-  };
-  float: right;
+.add-share,
+.share-item,
+.user-item,
+.add-user {
+  margin-top: 1.5em;
+  padding: 1em;
+  position: relative;
 }
 
-.shares-list {
+.add-share,
+.add-user {
+  background-color: $bold-color;
+  font-family: $primary-font;
+  color: $alt-bg-color;
+  margin-bottom: 5em;
+  @include span-columns(4);
+
+  &:before {
+    @include triangle(20px, $bold-color, up);
+    position: absolute;
+    top: -12px;
+    right: 0;
+  }
+
+  @include media($mobile) {
+    @include span-columns(4);
+  }
+}
+
+.shares-list,
+.users-list {
   @include span-columns(8);
   @include media($mobile) {
     @include span-columns(4);
   }
-  overflow: auto;
+}
+
+.add-share-header {
+  margin-top: 0;
+}
+
+.share-item {
+  &:before {
+    @include triangle(20px, blue, left);
+  }
+}
+
+.tags-entry,
+.comment-form {
+  position: relative;
+}
+
+.add-tag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.tag-item {
+  position: relative;
+  padding: 0.5em;
+  display: inline-block;
+  margin: 1em 3em 0 0;
+  background: $dull;
+  color: $bold-color;
+}
+
+.delete-tag {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+.add-share-btn,
+.add-user-btn {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 1em;
+  font-size: 1.25em;
+}
+
+.share-item {
+  margin-left: 5em;
+
+  @include media($mobile) {
+    margin: 0 0 7em 0;
+  }
+}
+
+.share-item-url {
+  font-size: 1.25em;
+  font-weight: 800;
+  margin-top: 0.5em;
+  display: inline-block;
+
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.comments-section,
+.tags-section, {
+  margin-top: 1em;
+}
+
+.tags {
+  color: $bold-color;
+}
+
+.add-comment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3.5em;
+}
+
+.comment-form {
+  padding-right: 3.5em;
+}
+
+.votes-section {
+  width: 5em;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  background: $alt-bg-color;
+
+  @include media($mobile) {
+    top: 100%;
+    left: 0;
+  }
+}
+
+.undo-vote {
+  width: 100%;
+
+  @include media($mobile) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100;
+  }
+}
+
+.votes,
+.votes-btn {
+  font-size: 1.25em;
+}
+
+.votes,
+.votes-btn,
+.undo-vote {
+  padding: 0.5em;
+}
+
+.select-role {
+  -webkit-appearance: none;
+  border-radius: 0;
+  border: none;
+  width: 100%;
+  font-size: 1em;
+  padding: 0.75em;
+  font-family: $primary-font;
+  position: relative;
+
+  &:after {
+    content: '&#8593;';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+  }
+
+  &:focus {
+    outline: none;
+    background: #D5D5D5;
+  }
 }

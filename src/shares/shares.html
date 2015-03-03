@@ -1,54 +1,63 @@
 <!-- // Show a share vm.shares -->
 <div class="shares-list">
-  <h1>Shares</h1>
+  <h1 class="shares-header">Shares</h1>
   <ul>
-    <li ng-repeat="share in vm.shares">
-      <p>url: {{share.url}} desc: {{share.description}}</p>
-      <span>tags:</span>
-      <span ng-repeat="item in share.tags track by $index">{{ item }}  </span><br>
-      <button ng-click="vm.vote($index, share, 1)">&uarr;</button>{{share.upvotes}}
-      <button ng-click="vm.vote($index, share, -1)">&darr;</button>{{share.downvotes}}
-      <button ng-click="vm.vote($index, share, 0)">clear votes</button>
-      <span>Comments</span>
-      <ul>
-        <!-- <li ng-repeat="comment in vm.listComments(share)">
-          <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
-        </li> -->
-        <li>
-          <form ng-submit="vm.addComment(share)">
-            <label>Add Comment
-              <textarea ng-model="share.newComment" name="text"></textarea>
-            </label>
-            <button>Add</button>
-          </form>
-        </li>
-      </ul>
+    <li class="share-item" ng-repeat="share in vm.shares">
+      <p><a class="share-item-url" href="{{share.url}}">{{share.url}}</a></p>
+      <p>{{share.description}}</p>
+      <div class="tags-section">
+        <span>tags:</span>
+        <span class="tags" ng-repeat="item in share.tags track by $index">{{ item }}   </span><br>
+      </div>
+      <div class="votes-section">
+        <button class="votes-btn" ng-click="vm.vote($index, share, 1)">&uarr;</button>
+        <span class="votes">{{share.upvotes}}</span>
+        <button class="votes-btn" ng-click="vm.vote($index, share, -1)">&darr;</button>
+        <span class="votes">{{share.downvotes}}</span>
+        <button class="undo-vote" ng-click="vm.vote($index, share, 0)">UNDO</button>
+      </div>
+      <div class="comments-section">
+        <span>Comments</span>
+        <ul>
+          <!-- <li ng-repeat="comment in vm.listComments(share)">
+            <p>{{ comment.text }} Created by: <span>{{ comment.userId }} {{ comment.created }}</span></p>
+          </li> -->
+          <li>
+            <form class="comment-form" ng-submit="vm.addComment(share)">
+              <textarea placeholder="Add comment"ng-model="share.newComment" name="text"></textarea>
+              <button class="add-comment">ADD</button>
+            </form>
+          </li>
+        </ul>
+      </div>
     </li>
   </ul>
 </div>
 
 <!-- // ADD a share vm.addShare(); -->
 <div class="add-share" ng-show="vm.currentUser.user.userId">
-  <h2>Add Share</h2>
+  <h2 class="add-share-header">Add Share</h2>
   <form ng-submit="vm.addShare()">
     <label>url
       <input ng-model="vm.newShare.url">
     </label><br>
     <label>description
-      <input ng-model="vm.newShare.description">
+      <textarea ng-model="vm.newShare.description"></textarea>
     </label>
   </form>
   <form ng-submit="vm.newShare.addTag('')">
     <label>tags
-      <input ng-model="vm.newShare.tags[0]">
+      <div class="tags-entry">
+        <input ng-model="vm.newShare.tags[0]">
+        <button class="add-tag" type="submit">+</button>
+      </div>
     </label>
-    <button type="submit">+</button>
   </form>
   <div>
-    <span ng-if="$index !== 0" ng-repeat="item in vm.newShare.tags track by $index" ng-click="vm.newShare.addTag(item)">
+    <span class="tag-item" ng-if="$index !== 0" ng-repeat="item in vm.newShare.tags track by $index" ng-click="vm.newShare.addTag(item)">
       {{ item }}
-      <button ng-click="vm.newShare.removeTag($index)">X</button>
+      <button class="delete-tag" ng-click="vm.newShare.removeTag($index)">X</button>
     </span>
   </div>
-  <button ng-click="vm.addShare()">add</button><br>
+  <button class="add-share-btn" ng-click="vm.addShare()">ADD</button>
 </div>
