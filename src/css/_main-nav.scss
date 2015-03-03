@@ -86,3 +86,9 @@ img.main-nav-link {
     display: inline-block;
   }
 }
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  left: 100%;
+}

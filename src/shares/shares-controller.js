@@ -68,6 +68,9 @@ app.config(['$routeProvider', function($routeProvider) {
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
       var comment = data;
+      if(!share.comments) {
+        share.comments = [];
+      }
       share.comments.push(comment);
       share.newComment = '';
     });

@@ -1,21 +1,101 @@
 // The root module for our Angular application
 var app = angular.module('app', ['ngRoute']);
 
-app.controller('MainNavCtrl',
-  ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
-    var self = this;
+// app.controller('MainNavCtrl',
+//   ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
+//     var self = this;
+//
+//     self.isActive = function (path) {
+//       // The default route is a special case.
+//       if (path === '/') {
+//         return $location.path() === '/';
+//       }
+//       return StringUtil.startsWith($location.path(), path);
+//     };
+//
+//     self.currentUser = currentUser;
+//
+// }]);
 
-    self.isActive = function (path) {
-      // The default route is a special case.
-      if (path === '/') {
-        return $location.path() === '/';
-      }
-      return StringUtil.startsWith($location.path(), path);
-    };
+app.directive('shareNav', function () {
 
-    self.currentUser = currentUser;
-    
-  }]);
+  return {
+
+    // transclude specifies that we are going to allow
+    // inner content (e.g. our directive will wrap
+    // some other content)
+
+    replace: true,
+
+    scope: {
+      onclose: '='
+    },
+
+    templateUrl: '/nav/main-nav.html',
+
+    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', function($location, StringUtil, $log, currentUser, scope) {
+      var self = this;
+
+      self.isActive = function (path) {
+        // The default route is a special case.
+        if (path === '/') {
+          return $location.path() === '/';
+        }
+        return StringUtil.startsWith($location.path(), path);
+      };
+
+      self.currentUser = currentUser;
+
+      var self = this;
+
+      self.close = function () {
+        $scope.onclose();
+      };
+
+      self.showModalNav = function() {
+        console.log('show modal');
+        if(self.modalNavShow) {
+          self.modalNavShow = false;
+        } else {
+          self.modalNavShow = true;
+        }
+      };
+
+
+    }],
+
+    controllerAs: 'vm',
+
+    link: function ($scope, element, attrs, ctrl) {
+
+      // function closeModal () {
+      //   // This is how we tell Angular that we're about
+      //   // to change something. Since this event comes from
+      //   // a non-Angular source, we need to do this...
+      //   $scope.$apply(function() {
+      //     ctrl.close();
+      //   });
+      // }
+      //
+      // // We don't want to close the modal if we clicked
+      // // inside the modal...
+      // element[0].addEventListener('click', function (e) {
+      //   e.stopPropagation();
+      // });
+      //
+      // setTimeout(function () {
+      //   // We do want to close the modal if we click the document
+      //   document.addEventListener('click', closeModal);
+      //
+      //   // When the directive is destroyed, remove the
+      //   // click handler from document
+      //   $scope.$on('$destroy', function () {
+      //     document.removeEventListener('click', closeModal);
+      //   });
+      // });
+    }
+  }
+});
 
 app.factory('Share', ['$log', function($log) {
 
@@ -120,6 +200,9 @@ app.config(['$routeProvider', function($routeProvider) {
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
       var comment = data;
+      if(!share.comments) {
+        share.comments = [];
+      }
       share.comments.push(comment);
       share.newComment = '';
     });
@@ -172,7 +255,6 @@ app.config(['$routeProvider', function($routeProvider) {
 .controller('UserCtrl', ['user', 'github', function (user, github) {
   this.user = user;
   this.github = github.data;
-  console.log(this.github);
 }]);
 
 app.factory('User', function () {
