@@ -46,14 +46,14 @@ app.config(['$routeProvider', function($routeProvider) {
       refreshShares();
     });
   };
-  
+
   self.removeShare = function(share) {
     sharesService.removeShare(share._id).then(function (data) {
       self.shares = self.shares.filter(function (existingShare) {
         return existingShare._id !== share._id;
       });
     });
-  }
+  };
 
   self.vote = function(index, share, num) {
     sharesService.vote(share._id, num).then(function(data){

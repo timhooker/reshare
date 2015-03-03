@@ -150,7 +150,7 @@ main {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 25%;
+    width: 30%;
     z-index: -1; }
     @media screen and (max-width: 700px)  {
       .main-nav:after {
@@ -292,30 +292,56 @@ li.ng-scope {
     .share-item {
       margin: 0 0 7em 0; } }
 
+.remove-share-item, .remove-comment {
+  background: none;
+  color: #666871;
+  font-size: 1.25em; }
+  .remove-share-item:hover, .remove-comment:hover {
+    color: #6A738D;
+    background: none; }
+
+.remove-share-item {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2.5em; }
+
 .share-item-url {
-  font-size: 1.25em;
+  font-size: 1.75em;
   font-weight: 800;
-  margin-top: 0.5em;
+  margin: 0.5em 1.5em 0 0;
   display: inline-block;
-  word-break: break-word; }
-  .share-item-url:hover {
-    color: #6A738D; }
+  word-break: break-word;
+  color: #666871; }
 
-.comments-section, .tags-section {
-  margin-top: 1em; }
+.description {
+  font-size: 1.25em;
+  margin-bottom: 0; }
 
-.tags {
-  color: #7D6E43; }
+.user-page-link {
+  color: #666871;
+  font-weight: 800; }
+
+.comments-section, .share-item-user {
+  margin-top: 1.5em; }
+
+.comment-text {
+  margin-bottom: 0; }
+
+.tags, .comment-user {
+  color: #7D6E43;
+  font-size: 0.75em; }
 
 .add-comment {
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
-  width: 3.5em; }
+  width: 2.5em;
+  font-size: 1.25em; }
 
 .comment-form {
-  padding-right: 3.5em; }
+  padding-right: 2.5em; }
 
 .votes-section {
   width: 5em;
@@ -386,7 +412,7 @@ img.main-nav-link {
 
 .logo-section {
   display: inline-block;
-  width: 25%;
+  width: 30%;
   background: #6A738D;
   padding: 1.5em; }
   @media screen and (max-width: 700px)  {
