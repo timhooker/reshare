@@ -2,6 +2,10 @@ $mobile: new-breakpoint(max-width 700px 4);
 
 main {
   @include outer-container();
+
+  @include media($mobile) {
+    margin-top: 4em;
+  }
 }
 
 .root-content {
@@ -17,9 +21,16 @@ main {
 .main-nav {
   background: $accent-color-dark;
   color: #FFF;
-  // padding: 0 2em 0 0;
   font-family: $primary-font;
   height: 4.5em;
+
+  @include media($mobile) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+  }
 
   &:after {
     content: '';

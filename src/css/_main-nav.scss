@@ -31,8 +31,13 @@ img.main-nav-link {
 
 .logo-section {
   display: inline-block;
-  width: 10rem;
+  width: 25%;
+  background: $accent-color;
   padding: 1.5em;
+
+  @include media($mobile) {
+    background: none;
+  }
 }
 
 .menu-icon {
@@ -48,11 +53,25 @@ img.main-nav-link {
     margin-top: 0.5em;
     width: 2.0em;
     height: 0.25em;
-    background: white;
+    background: $alt-bg-color;
     box-shadow:
-    0 0.6em 0 0 white,
-    0 1.2em 0 0 white;
+    0 0.6em 0 0 $alt-bg-color,
+    0 1.2em 0 0 $alt-bg-color;
   }
+
+  @include media($mobile) {
+    display: inline-block;
+  }
+}
+
+.add-share-link {
+  font-size: 1.5em;
+  max-width: 60%;
+  margin: 1em auto;
+  display: none;
+  cursor: pointer;
+  color: $alt-bg-color;
+
 
   @include media($mobile) {
     display: inline-block;
