@@ -20,5 +20,6 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
     getCurrentUser: function() {
       return ajaxHelper.call($http.get('/api/users/me'));
     }
+
   };
 }]);

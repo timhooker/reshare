@@ -104,7 +104,6 @@ app.config(['$routeProvider', function($routeProvider) {
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
       var comment = data;
-      console.log(data.created);
       share.comments.push(comment);
       share.newComment = '';
     });
@@ -113,6 +112,13 @@ app.config(['$routeProvider', function($routeProvider) {
   self.listComments = function (share) {
     sharesService.listComments(share._id).then(function(data) {
       share.comments = data;
+    });
+  };
+
+  self.removeComment = function (share, comment) {
+    sharesService.removeComment(share._id, comment._id).then(function(data) {
+      var index = share.comments.indexOf(comment);
+      share.comments.splice(index, 1);
     });
   };
 
@@ -126,7 +132,7 @@ app.config(['$routeProvider', function($routeProvider) {
     } else {
       share.showComments = false;
     }
-  }
+  };
 
 }]);
 
@@ -139,14 +145,20 @@ app.config(['$routeProvider', function($routeProvider) {
       user: ['$route', 'usersService', function ($route, usersService) {
         var routeParams = $route.current.params;
         return usersService.getByUserId(routeParams.userid);
+      }],
+      github: ['$route', '$http', function ($route, $http) {
+        var routeParams = $route.current.params;
+        return $http.get('https://api.github.com/users/' + routeParams.userid);
       }]
     }
   };
 
   $routeProvider.when('/users/:userid', routeDefinition);
 }])
-.controller('UserCtrl', ['user', function (user) {
+.controller('UserCtrl', ['user', 'github', function (user, github) {
   this.user = user;
+  this.github = github.data;
+  console.log(this.github);
 }]);
 
 app.factory('User', function () {
@@ -302,6 +314,7 @@ app.factory('usersService', ['$http', '$q', '$log', 'ajaxHelper', function($http
     getCurrentUser: function() {
       return ajaxHelper.call($http.get('/api/users/me'));
     }
+
   };
 }]);
 
