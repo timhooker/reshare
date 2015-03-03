@@ -362,6 +362,9 @@ li.ng-scope {
     outline: none;
     background: #D5D5D5; }
 
+.user-item {
+  background: #eee; }
+
 .main-nav {
   color: #F2F3F0;
   text-transform: uppercase; }
@@ -421,3 +424,8 @@ img.main-nav-link {
   @media screen and (max-width: 700px)  {
     .add-share-link {
       display: inline-block; } }
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  left: 100%; }

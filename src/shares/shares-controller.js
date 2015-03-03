@@ -46,7 +46,7 @@ app.config(['$routeProvider', function($routeProvider) {
       refreshShares();
     });
   };
-  
+
   self.removeShare = function(share) {
     sharesService.removeShare(share._id).then(function (data) {
       self.shares = self.shares.filter(function (existingShare) {
@@ -68,6 +68,9 @@ app.config(['$routeProvider', function($routeProvider) {
   self.addComment = function (share) {
     sharesService.addComment(share._id, share.newComment).then(function(data) {
       var comment = data;
+      if(!share.comments) {
+        share.comments = [];
+      }
       share.comments.push(comment);
       share.newComment = '';
     });

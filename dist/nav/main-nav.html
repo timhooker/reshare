@@ -1,4 +1,4 @@
-<nav class="main-nav" ng-controller="MainNavCtrl as vm">
+<nav class="main-nav">
   <div class="logo-section">
     <a class="logo" href="#/shares">R|S</a>
   </div>
@@ -6,12 +6,22 @@
     <a class="main-nav-link" ng-class="{active: vm.isActive('/shares') || vm.isActive('/')}" href="#/shares">Shares</a
     ><a class="main-nav-link" ng-class="{active: vm.isActive('/users')}" ng-href="#/users">Users</a
     ><a class="main-nav-link" ng-if="vm.currentUser.user" href="/logout">Logout</a
-    ><a class="main-nav-link" ng-if="vm.currentUser.user" ng-href="/#/users/{{vm.currentUser.userId}}">{{vm.currentUser.github.name}}</a
-    ><a ng-if="vm.currentUser.user" ng-href="/#/users/{{vm.currentUser.userId}}"
+    ><a class="main-nav-link" ng-if="vm.currentUser.user" ng-href="/#/users/{{ vm.currentUser.user.userId }}">{{vm.currentUser.github.name}}</a
+    ><a ng-if="vm.currentUser.user" ng-href="/#/users/{{vm.currentUser.user.userId}}"
       ><img class="main-nav-link" ng-if="vm.currentUser.github" ng-src="{{ vm.currentUser.github.avatar_url }}"
     ></a>
     <a class="main-nav-link" ng-if="!vm.currentUser.user" href="/auth/github">Login</a>
-    <span class="menu-icon"></span>
-    <a class="add-share-link" ng-if="vm.currentUser.user" href="/#/shares/#add-share">Add share</a>
+    <span class="menu-icon" ng-click="vm.showMobileNav()"></span>
+    <a class="add-share-link" ng-if="vm.currentUser.user" href="#add-share">Add share</a>
+  </div>
+  <div class="mobile-nav" ng-class="{ mobileNav: vm.mobileNavShow }">
+    <a class="mobile-nav-link" ng-class="{active: vm.isActive('/shares') || vm.isActive('/')}" href="#/shares">Shares</a
+    ><a class="mobile-nav-link" ng-class="{active: vm.isActive('/users')}" ng-href="#/users">Users</a
+    ><a class="mobile-nav-link" ng-if="vm.currentUser.user" href="/logout">Logout</a
+    ><a class="mobile-nav-link" ng-if="vm.currentUser.user" ng-href="/#/users/{{vm.currentUser.userId}}">{{vm.currentUser.github.name}}</a
+    ><a ng-if="vm.currentUser.user" ng-href="/#/users/{{vm.currentUser.userId}}"
+      ><img class="mobile-nav-link" ng-if="vm.currentUser.github" ng-src="{{ vm.currentUser.github.avatar_url }}"
+    ></a>
+    <a class="mobile-nav-link" ng-if="!vm.currentUser.user" href="/auth/github">Login</a>
   </div>
 </nav>
