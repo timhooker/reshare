@@ -30,8 +30,8 @@
 
           <li>
           <button ng-click="vm.toggleComments(share)">{{ share.shareStatus }} {{ share.comments.length }} comments</button>
-            <form class="comment-form" ng-submit="vm.addComment(share)">
-              <textarea placeholder="Add comment"ng-model="share.newComment" name="text"></textarea>
+            <form ng-show="vm.currentUser.user.userId" class="comment-form" ng-submit="vm.addComment(share)">
+              <textarea placeholder="Add comment" ng-model="share.newComment" name="text"></textarea>
               <button class="add-comment">+</button>
             </form>
           </li>
