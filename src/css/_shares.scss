@@ -182,17 +182,17 @@
   @include media($mobile) {
     top: 100%;
     left: 0;
+    width: 9.25em;
   }
 }
 
 .undo-vote {
-  width: 100%;
 
   @include media($mobile) {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 100;
+    left: 100%;
   }
 }
 
@@ -200,6 +200,11 @@
 .votes-btn {
   font-size: 1.25em;
   font-weight: 800;
+
+  @include media($mobile) {
+    display: inline-block;
+    padding: 0.25em;
+  }
 }
 
 .votes {
