@@ -12,7 +12,7 @@
     ></a>
     <a class="main-nav-link" ng-if="!vm.currentUser.user" href="/auth/github">Login</a>
 
-    <span class="menu-icon" ng-click="vm.showMobileNav()"></span>
+    <span class="menu-icon" ng-click="vm.showMobileNav($event)"></span>
 
     <a class="add-share-link" ng-show="vm.currentUser.user" href="" ng-click="vm.goTo('add-share')">Add share</a>
 
