@@ -93,7 +93,41 @@ img.main-nav-link {
 }
 
 .mobile-nav {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
   position: absolute;
-  left: 100%;
+  top: -30;
+  right: 0;
+  left: 0;
+  z-index: -10;
+  transition: all 0.25s ease-in-out;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+  top: 4.5em;
+  transition: all 0.25s ease-in-out;
+}
+
+.mobile-nav-link {
+  display: block;
+  color: $alt-bg-color;
+  background-color: $accent-color;
+  padding: 2em;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    background: $alt-bg-color;
+    color: $accent-color;
+    transition: all 0.25s ease-in-out;
+  }
+}
+
+.mobile-user-img {
+  width: 5.35em;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
