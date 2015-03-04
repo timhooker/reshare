@@ -1,3 +1,9 @@
 .user-item {
-  background: #eee;
+  background: $alt-bg-color;
+  font-size: 1.25em;
+  padding: 1em;
+}
+
+.user-img {
+  width: 14em;
 }

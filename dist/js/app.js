@@ -247,6 +247,7 @@ app.config(['$routeProvider', function($routeProvider) {
 .controller('UserCtrl', ['user', 'github', function (user, github) {
   this.user = user;
   this.github = github.data;
+  console.log(this.github);
 }]);
 
 app.factory('User', function () {
