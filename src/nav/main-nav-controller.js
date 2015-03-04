@@ -28,9 +28,12 @@ app.directive('shareNav', function () {
 
       self.currentUser = currentUser;
 
+      // did this using angular $anchorScroll
+      // when you set $location.has to the id
+      // of an element, it will scroll there when you
+      // call $anchorScroll
       self.goTo = function(elem) {
         $location.hash(elem);
-        console.log(elem);
 
         $anchorScroll();
       };
