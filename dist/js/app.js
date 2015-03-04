@@ -17,7 +17,8 @@ app.directive('shareNav', function () {
 
     templateUrl: '/nav/main-nav.html',
 
-    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', function($location, StringUtil, $log, currentUser, scope) {
+    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', '$anchorScroll',
+    function($location, StringUtil, $log, currentUser, scope, $anchorScroll) {
       var self = this;
 
       self.isActive = function (path) {
@@ -30,9 +31,12 @@ app.directive('shareNav', function () {
 
       self.currentUser = currentUser;
 
-      // self.close = function () {
-      //   $scope.onclose();
-      // };
+      self.goTo = function(elem) {
+        $location.hash(elem);
+        console.log(elem);
+
+        $anchorScroll();
+      };
 
       self.showMobileNav = function() {
         console.log('show modal');
@@ -50,15 +54,11 @@ app.directive('shareNav', function () {
 
     link: function ($scope, element, attrs, ctrl) {
 
-      // console.log(element[0]);
 
       var addShareLink = document.querySelector('.add-share-link');
 
-      addShareLink.onClick(function() {
 
-
-      });
-      console.log(addShareLink);
+      // console.log(addShareLink);
 
       // function closeModal () {
       //   // This is how we tell Angular that we're about
