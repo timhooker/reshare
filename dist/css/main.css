@@ -362,12 +362,15 @@ li.ng-scope {
       left: 0;
       width: 9.25em; } }
 
-@media screen and (max-width: 700px)  {
-  .undo-vote {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100%; } }
+.undo-vote {
+  width: 100%; }
+  @media screen and (max-width: 700px)  {
+    .undo-vote {
+      width: 5.5em;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%; } }
 
 .votes, .votes-btn {
   font-size: 1.25em;

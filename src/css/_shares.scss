@@ -187,8 +187,10 @@
 }
 
 .undo-vote {
+  width: 100%;
 
   @include media($mobile) {
+    width: 5.5em;
     position: absolute;
     top: 0;
     bottom: 0;
