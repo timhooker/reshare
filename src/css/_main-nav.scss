@@ -23,17 +23,26 @@ img.main-nav-link {
 .logo {
   font-size: 2.5em;
   color: $alt-bg-color;
+  font-weight: 800;
 
   &:hover {
     color: $alt-bg-color;
   }
 }
 
+.logo-text {
+  text-transform: none;
+  font-size: 0.47em;
+  display: block;
+  font-weight: 300;
+  line-height: 1.5em;
+}
+
 .logo-section {
   display: inline-block;
-  width: 25%;
+  width: 30%;
   background: $accent-color;
-  padding: 1.5em;
+  padding: 1.25em;
 
   @include media($mobile) {
     background: none;

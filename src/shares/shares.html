@@ -1,15 +1,15 @@
 <!-- // Show a share vm.shares -->
+<h1 class="shares-header">ReShare</h1>
 <div class="shares-list">
-  <h1 class="shares-header">ReShare</h1>
   <ul>
     <li class="share-item" ng-repeat="share in vm.shares">
-      <button ng-if="share.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'"ng-click="vm.removeShare(share)">X</button>
+      <button class="remove-share-item" ng-if="share.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'"ng-click="vm.removeShare(share)">X</button>
       <p><a class="share-item-url" href="{{ share.url }}">{{share.url}}</a></p>
-      <p>{{share.description}}
+      <p class="description">{{share.description}}
         <div class="tags-section">
-          <span class="tags" ng-repeat="item in share.tags track by $index">{{ item }}   </span>
+          <span class="tags" ng-repeat="item in share.tags track by $index">{{ item }} </span>
         </div>
-        <p class="share-item-submited">ReShared by {{share.userId}}</p>
+        <p class="share-item-user">ReShared by <a class="user-page-link" href="/#/users/{{share.userId}}">{{share.userId}}</a></p>
       </p>
       <div class="votes-section">
         <button class="votes-btn" ng-click="vm.vote($index, share, 1)">&uarr;</button>
@@ -21,10 +21,10 @@
       <div class="comments-section">
         <ul>
           <li ng-repeat="comment in share.comments | orderBy: 'created'" ng-show="share.showComments">
-            <p>"{{ comment.text }}"</p>
-            <p>
-              Created by <span>{{ comment.userId }} on {{ comment.created | date:"MM/dd/yyyy 'at' h:mma" }}</span>
-              <button ng-if="comment.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'" ng-click="vm.removeComment(share, comment)">X</button>
+            <p class="comment-text">"{{ comment.text }}"</p>
+            <p class="comment-user">
+              Created by <a class="user-page-link" href="/#/users/{{comment.userId}}">{{ comment.userId }}</a> on {{ comment.created | date:"MM/dd/yyyy 'at' h:mma" }}</span>
+              <button class="remove-comment" ng-if="comment.userId === vm.currentUser.user.userId || vm.currentUser.user.role === 'admin'" ng-click="vm.removeComment(share, comment)">X</button>
             </p>
           </li>
 
@@ -32,7 +32,7 @@
           <button ng-click="vm.toggleComments(share)">{{ share.shareStatus }} {{ share.comments.length }} comments</button>
             <form class="comment-form" ng-submit="vm.addComment(share)">
               <textarea placeholder="Add comment"ng-model="share.newComment" name="text"></textarea>
-              <button class="add-comment">ADD</button>
+              <button class="add-comment">+</button>
             </form>
           </li>
         </ul>
