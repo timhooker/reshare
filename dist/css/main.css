@@ -378,6 +378,7 @@ li.ng-scope {
   @media screen and (max-width: 700px)  {
     .votes, .votes-btn {
       display: inline-block;
+      width: 1.65em;
       padding: 0.25em; } }
 
 .votes {
