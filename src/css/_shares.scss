@@ -194,8 +194,12 @@
 .votes,
 .votes-btn {
   font-size: 1.25em;
+  font-weight: 800;
 }
 
+.votes {
+  color: $accent-color-dark;
+}
 .votes,
 .votes-btn,
 .undo-vote {

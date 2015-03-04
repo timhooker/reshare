@@ -368,7 +368,11 @@ li.ng-scope {
       left: 100; } }
 
 .votes, .votes-btn {
-  font-size: 1.25em; }
+  font-size: 1.25em;
+  font-weight: 800; }
+
+.votes {
+  color: #666871; }
 
 .votes, .votes-btn, .undo-vote {
   padding: 0.5em; }
