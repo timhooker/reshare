@@ -10,8 +10,8 @@ app.directive('shareNav', function () {
 
     templateUrl: '/nav/main-nav.html',
 
-    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', '$anchorScroll', '$rootScope',
-    function($location, StringUtil, $log, currentUser, $scope, $anchorScroll, $rootScope) {
+    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', '$anchorScroll', '$rootScope', '$timeout',
+    function($location, StringUtil, $log, currentUser, $scope, $anchorScroll, $rootScope, $timeout) {
       var self = this;
 
       self.isActive = function (path) {
@@ -23,9 +23,7 @@ app.directive('shareNav', function () {
       };
 
       self.currentUser = currentUser;
-
-
-
+      
       // did this using angular $anchorScroll
       // when you set $location.has to the id
       // of an element, it will scroll there when you
