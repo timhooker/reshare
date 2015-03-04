@@ -150,7 +150,8 @@ main {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 30%;
+    width: 12%;
+    min-width: 7em;
     z-index: -1; }
     @media screen and (max-width: 700px)  {
       .main-nav:after {
@@ -391,6 +392,12 @@ li.ng-scope {
     outline: none;
     background: #D5D5D5; }
 
+.user-info {
+  padding-left: 6em; }
+  @media screen and (max-width: 700px)  {
+    .user-info {
+      padding-left: 0; } }
+
 .user-item {
   background: #eee; }
 
@@ -411,7 +418,7 @@ img.main-nav-link {
   float: right; }
 
 .logo {
-  font-size: 2.5em;
+  font-size: 2.25em;
   color: #F2F3F0;
   font-weight: 800; }
   .logo:hover {
@@ -426,9 +433,10 @@ img.main-nav-link {
 
 .logo-section {
   display: inline-block;
-  width: 30%;
+  width: 12%;
+  min-width: 7em;
   background: #6A738D;
-  padding: 1.25em; }
+  padding: 0.75em 1.5em; }
   @media screen and (max-width: 700px)  {
     .logo-section {
       background: none; } }
@@ -452,15 +460,17 @@ img.main-nav-link {
       display: inline-block; } }
 
 .add-share-link {
-  font-size: 1.5em;
+  font-size: 1.25em;
   max-width: 60%;
-  margin: 1em auto;
+  margin: 1.25em auto;
   display: none;
   cursor: pointer;
   color: #F2F3F0; }
   @media screen and (max-width: 700px)  {
     .add-share-link {
       display: inline-block; } }
+  .add-share-link:hover {
+    color: #F2F3F0; }
 
 .mobile-nav {
   display: none;

@@ -39,7 +39,8 @@ main {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 30%;
+    width: 12%;
+    min-width: 7em;
     z-index: -1;
 
     @include media($mobile) {
