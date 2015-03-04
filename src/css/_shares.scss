@@ -227,6 +227,14 @@
   }
 }
 
+.user-info {
+  padding-left: 6em;
+
+  @include media($mobile) {
+    padding-left: 0;
+  }
+}
+
 hamburger:active{
 
   &:active{
