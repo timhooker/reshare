@@ -2,10 +2,6 @@ app.directive('shareNav', function () {
 
   return {
 
-    // transclude specifies that we are going to allow
-    // inner content (e.g. our directive will wrap
-    // some other content)
-
     replace: true,
 
     scope: {
