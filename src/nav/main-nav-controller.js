@@ -1,19 +1,3 @@
-// app.controller('MainNavCtrl',
-//   ['$location', 'StringUtil', '$log', 'currentUser', function($location, StringUtil, $log, currentUser) {
-//     var self = this;
-//
-//     self.isActive = function (path) {
-//       // The default route is a special case.
-//       if (path === '/') {
-//         return $location.path() === '/';
-//       }
-//       return StringUtil.startsWith($location.path(), path);
-//     };
-//
-//     self.currentUser = currentUser;
-//
-// }]);
-
 app.directive('shareNav', function () {
 
   return {
@@ -43,18 +27,16 @@ app.directive('shareNav', function () {
 
       self.currentUser = currentUser;
 
-      var self = this;
+      // self.close = function () {
+      //   $scope.onclose();
+      // };
 
-      self.close = function () {
-        $scope.onclose();
-      };
-
-      self.showModalNav = function() {
+      self.showMobileNav = function() {
         console.log('show modal');
-        if(self.modalNavShow) {
-          self.modalNavShow = false;
+        if(self.mobileNavShow) {
+          self.mobileNavShow = false;
         } else {
-          self.modalNavShow = true;
+          self.mobileNavShow = true;
         }
       };
 
@@ -64,6 +46,16 @@ app.directive('shareNav', function () {
     controllerAs: 'vm',
 
     link: function ($scope, element, attrs, ctrl) {
+
+      // console.log(element[0]);
+
+      var addShareLink = document.querySelector('.add-share-link');
+
+      addShareLink.onClick(function() {
+
+
+      });
+      console.log(addShareLink);
 
       // function closeModal () {
       //   // This is how we tell Angular that we're about
@@ -91,5 +83,5 @@ app.directive('shareNav', function () {
       //   });
       // });
     }
-  }
+  };
 });

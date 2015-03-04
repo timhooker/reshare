@@ -53,7 +53,7 @@ app.config(['$routeProvider', function($routeProvider) {
         return existingShare._id !== share._id;
       });
     });
-  }
+  };
 
   self.vote = function(index, share, num) {
     sharesService.vote(share._id, num).then(function(data){
