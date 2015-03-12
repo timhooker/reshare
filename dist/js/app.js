@@ -5,10 +5,6 @@ app.directive('shareNav', function () {
 
   return {
 
-    // transclude specifies that we are going to allow
-    // inner content (e.g. our directive will wrap
-    // some other content)
-
     replace: true,
 
     scope: {
@@ -17,8 +13,8 @@ app.directive('shareNav', function () {
 
     templateUrl: '/nav/main-nav.html',
 
-    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', '$anchorScroll',
-    function($location, StringUtil, $log, currentUser, $scope, $anchorScroll) {
+    controller: ['$location', 'StringUtil', '$log', 'currentUser', '$scope', '$anchorScroll', '$rootScope', '$timeout',
+    function($location, StringUtil, $log, currentUser, $scope, $anchorScroll, $rootScope, $timeout) {
       var self = this;
 
       self.isActive = function (path) {
@@ -30,7 +26,7 @@ app.directive('shareNav', function () {
       };
 
       self.currentUser = currentUser;
-
+      
       // did this using angular $anchorScroll
       // when you set $location.has to the id
       // of an element, it will scroll there when you
@@ -41,25 +37,11 @@ app.directive('shareNav', function () {
         $anchorScroll();
       };
 
-      self.showMobileNav = function($event) {
-        if($event) {
-          $event.stopPropagation();
-        }
-        if(self.mobileNavShow === true) {
-          self.mobileNavShow = false;
-          document.removeEventListener('click', hideNav);
-        } else {
-          self.mobileNavShow = true;
-          document.addEventListener('click', hideNav);
-        }
-      };
+      self.location = $location.$$path;
 
-      function hideNav(){
-        $scope.$apply(function() {
-          self.showMobileNav();
-        });
-      }
-
+      $rootScope.$on('$locationChangeSuccess', function() {
+        self.location = $location.$$path;
+      });
 
     }],
 
@@ -67,6 +49,24 @@ app.directive('shareNav', function () {
 
     link: function ($scope, element, attrs, ctrl) {
 
+      ctrl.showMobileNav = function($event) {
+        if($event) {
+          $event.stopPropagation();
+        }
+        if(ctrl.mobileNavShow === true) {
+          ctrl.mobileNavShow = false;
+          document.removeEventListener('click', hideNav);
+        } else {
+          ctrl.mobileNavShow = true;
+          document.addEventListener('click', hideNav);
+        }
+      };
+
+      function hideNav(){
+        $scope.$apply(function() {
+          ctrl.showMobileNav();
+        });
+      }
       document.querySelector('.mobile-nav').addEventListener('click', function (e) {
         e.stopPropagation();
       });

@@ -14,7 +14,7 @@
 
     <span class="menu-icon" ng-click="vm.showMobileNav($event)"></span>
 
-    <a class="add-share-link" ng-show="vm.currentUser.user" href="" ng-click="vm.goTo('add-share')">Add share</a>
+    <a class="add-share-link" ng-show="vm.currentUser.user && vm.location === '/shares' || vm.location === '/' " href="" ng-click="vm.goTo('add-share')">Add share</a>
 
   </div>
   <div class="mobile-nav" ng-class="{ show: vm.mobileNavShow }">
